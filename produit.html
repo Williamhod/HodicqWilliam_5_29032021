@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- meta -->
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--style-->
+        <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+
+        <title>Orinico</title>
+    </head>
+    <body>
+        <header class="bg-secondary sticky-top">
+            <div class="container">
+                <div class="row">
+                    <nav class="col navbar navbar-expand-lg navbar-dark">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="images/Orinoco2.logo.png" width="auto" height="auto" alt="Logo" />
+                        </a>
+                        <form method="get" action="panier.html">
+                            <button type="button" class="navbar-toggler" style="color: white; border-color: white">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    class="bi bi-basket2"
+                                    viewBox="0 0 16 16"
+                                    data-darkreader-inline-fill=""
+                                >
+                                    <path
+                                        d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"
+                                    ></path>
+                                    <path
+                                        d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"
+                                    ></path>
+                                </svg>
+                                Panier
+                            </button>
+                        </form>
+                        <div id="navbarContent" class="collapse navbar-collapse">
+                            <ul class="navbar-nav mr-auto"></ul>
+                            <form class="d-flex">
+                                <button type="button" class="btn btn-success">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-basket2"
+                                        viewBox="0 0 16 16"
+                                        data-darkreader-inline-fill=""
+                                    >
+                                        <path
+                                            d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"
+                                        ></path>
+                                        <path
+                                            d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"
+                                        ></path>
+                                    </svg>
+                                    Panier
+                                </button>
+                            </form>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <section class="container">
+            <div class="alert alert-light alert-dismissible fade show mt-4" role="alert">
+                <h1 class="alert-heading text-center">Voici votre article</h1>
+                <p class="text-center">Très bon choix ! Moins cher que gratuit !</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </section>
+        <section class="container mt-3">
+            <div class="row justify-content-center">
+                <div class="card mb-4" style="width: 90%">
+                    <img src="./images/vcam_1.jpg" class="card-img-top card-img-product" alt="" />
+                    <div class="card-body">
+                        <h5 class="card-title">blablabla nom</h5>
+                        <p class="card-text">blabla</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" id="">Prix :</li>
+                            <li class="list-group-item">
+                                <select class="form-select inputGroupSelect01" id="">
+                                    <option selected>Lentilles</option>
+                                </select>
+                            </li>
+
+                            <li class="list-group-item">
+                                <select class="form-select inputGroupSelect02">
+                                    <option selected>Quantité</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </li>
+                        </ul>
+                        <div class="row">
+                        <div class="col-12 col-md-6 text-center text-md-left">
+                        <a href="#" class="btn btn-success mt-1">Ajouter au panier</a>
+                        </div>
+                        <div class="col-12 col-md-6 text-center text-md-right">
+                        <a href="#" class="btn btn-info  mt-1" id="">Voir les autres articles</a>
+                        </div>
+                        </div>
+                     </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="container bg-secondary mt-1">
+            <div class="row pt-4 pb-3">
+                <div class="col text-light">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item"><a href="#" class="text-light">Contactez-nous</a></li>
+                        <li class="list-inline-item">&middot;</li>
+                        <li class="list-inline-item"><a href="#" class="text-light">Conditions d'utilisations</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <!-- Script-->
+        <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="./js/index.js"></script>
+    </body>
+</html>
