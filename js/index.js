@@ -94,7 +94,6 @@ const loaded = (cameras) => {
     }
 };
 
-//! voir sil il faut une page par produit, ou si on peut juste cacher les elements autre du HTML et rester sur l index uniquement
 const loadPage = () => {
     // Récupère les params get pour l'id de l'objet afin d'avoir une fiche produit
     var $_GET = [];

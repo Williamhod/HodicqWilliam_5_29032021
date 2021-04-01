@@ -17,7 +17,11 @@ header{
     height: 200px;
     object-fit: cover;
 }
-
+.unstretched-link {
+    position: absolute;
+    position: relative;
+    z-index: 2;
+}
 
 footer{
     opacity: 0.8;
@@ -30,8 +34,11 @@ footer{
     object-fit: cover;
 }
 
-.unstretched-link {
-    position: absolute;
-    position: relative;
-    z-index: 2;
+/* older page */
+
+.card-img-older{
+    max-height: 80px;
+    max-width: 80px;
+
 }
+
