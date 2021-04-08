@@ -1,19 +1,20 @@
-body{
-background-image: linear-gradient(to bottom, rgba(78, 78, 76, 0.5), rgba(158, 158, 204, 0.5)), url("../images/bgbody.jpg");
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center;
-margin: 0;
-
+body {
+    background-image: linear-gradient(to bottom, rgba(78, 78, 76, 0.5), rgba(158, 158, 204, 0.5)),
+        url('../images/bgbody.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;
+    min-height: 100vh;
 }
 
-header{
+header {
     opacity: 0.9;
 }
-.card{
+.card {
     width: 20rem;
 }
-.card-img-index{
+.card-img-index {
     height: 200px;
     object-fit: cover;
 }
@@ -22,23 +23,62 @@ header{
     position: relative;
     z-index: 2;
 }
-
-footer{
+.opacity-change{
+    opacity: 0.7;
+}
+footer {
     opacity: 0.8;
+}
+.alert {
+    opacity: 0.85;
 }
 
 /*product page */
 
-.card-img-product{
+.card-img-product {
     max-height: 500px;
     object-fit: cover;
 }
 
-/* older page */
+/* order page */
 
-.card-img-older{
-    max-height: 80px;
-    max-width: 80px;
+.card-img-older {
+    /*background-image: url(./images/vcam_1.jpg);*/
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
 
+.align-manuel-item {
+    display: flex;
+    align-items: center;
+}
+.custom-input-order-name {
+    width: 50% !important;
+}
+@media only screen and (max-width: 766px) {
+    
+
+    .input-group > input {
+        margin: 0 0 !important;
+    }
+
+    .modal-xl {
+        margin: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 766px) {
+    .input-group > input {
+        margin: 0 35px !important;
+    }
+}
+
+/* Grossit la taille de la bordure pour les menus selects avec une erreur */
+select.border-danger {
+    border-width:2px;
 }
 
