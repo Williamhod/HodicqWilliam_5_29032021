@@ -72,11 +72,13 @@
         <section class="container p-0">
             <input type="hidden" id="page" value="order" />
             <div class="alert alert-light alert-dismissible fade show mt-4 p-0" role="alert">
-                <h2 id="order-alert-title" class="alert-heading text-center">Dernière Etape !</h2>
-                <p id="order-alert-contentfull" class="text-center">
+                <h2 id="order-alert-title" class="alert-heading justify-content-center">Dernière Etape !</h2>
+                <p id="order-alert-contentfull" class="text-center justify-content-center">
                     Votre commande est si proche, encore un petit pas à faire.
                 </p>
-                <p id="order-alert-contentempty" class="text-center">Hum ! Il manque un petit quelque chose...</p>
+                <p id="order-alert-contentempty" class="justify-content-center">
+                    Hum ! Il manque un petit quelque chose...
+                </p>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -87,13 +89,12 @@
                 <h2>Votre panier</h2>
             </div>
             <div class="d-none justify-content-center" id="basket-empty">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mt-4">
                     <div class="card mb-4" style="width: 100%">
                         <img src="images/basket.png" class="card-img-top" alt="" />
                         <div class="card-body">
                             <h2 class="card-title text-center" id="product-name">Votre panier est vide !</h2>
                             <p class="card-text"></p>
-
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <a href="index.html" class="btn btn-info mt-1" id="">Retour à la boutique</a>
@@ -103,37 +104,39 @@
                     </div>
                 </div>
             </div>
-            <div class="row border-secondary" id="order-card-container">
-                <div class="col-4 col-md-4 col-lg-2 pr-0 pl-0 pl-md-3 mb-4 mb-md-0">
-                    <img src="./images/vcam_1.jpg" class="card-img-older img-content" alt="..." />
-                </div>
-                <div class="col-8 col-md-4 col-lg-3 pl-md-4 pr-0 pl-0">
-                    <div class="card-body border-right">
-                        <h6 class="card-title">Nom du produit</h6>
-                        <p>Lentilles</p>
-                    </div>
-                </div>
-                <div class="col-0 col-md-4 col-lg-2 align-manuel-item pl-0 pr-0 border-right pl-md-2">
-                    <span class="justify-self-center">Prix :</span>
-                </div>
-                <div
-                    class="col-0 col-lg-2 align-manuel-item justify-content-lg-center pl-0 pr-0 pl-md-2 mt-md-2 mt-lg-0 border-right"
-                >
-                    <select class="form-select inputGroupSelect02">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                    <button class="btn border-secondary p-0 mx-2 ml-3">Supprimer</button>
-                </div>
-                <div class="col-0 col-lg-2 align-manuel-item pl-0 pl-md-2">
-                    <span> Sous-Total :</span>
-                </div>
+            <!-- Article -->
+            <div id="list_cards">
+                <article class="border-secondary mb-4" id="cards_0">
+                    <form class="row" action="#" method="GET" id="cards_0_form">
+                        <input type="hidden" value="" name="id" id="cards_0_id" />
+                        <div class="col-4 col-md-4 col-lg-2 pr-0 pl-0 pl-md-3 mb-4 mb-md-0">
+                            <img src="" class="card-img-older img-content" alt="..." />
+                        </div>
+                        <div class="col-8 col-md-4 col-lg-3 pl-md-4 pr-0 pl-0">
+                            <div class="card-body border-right">
+                                <h5 class="card-title"></h5>
+                                <p>Lentilles : <span id="cards_0_lenses"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-0 col-md-4 col-lg-2 align-manuel-item pl-0 pr-0 border-right pl-md-2 ml-1 ml-md-0">
+                            <span class="justify-self-center">Prix : <span id="cards_0_price"></span></span>
+                        </div>
+                        <div
+                            class="col-0 col-lg-2 align-manuel-item justify-content-lg-center ml-1 ml-md-0 pl-0 pr-0 pl-md-2 mt-md-2 mt-lg-0 border-right"
+                        >
+                            <select class="form-select inputGroupSelect02" id="cards_0_quantity"></select>
+                            <button class="btn border-secondary p-1 mx-2 ml-3 btn-order" id="cards_0_remove">
+                                Supprimer
+                            </button>
+                        </div>
+                        <div class="col-0 col-lg-2 align-manuel-item pl-0 pl-md-2 ml-1 ml-md-0">
+                            <p>Sous-total : <span id="cards_0_subtotal"></span></p>
+                        </div>
+                    </form>
+                </article>
             </div>
             <div class="row justify-content-around mt-2" id="order-total">
-                <h3 id="order-total">Total:</h3>
+                <h3>Total : <span id="cards_total"></span></h3>
             </div>
         </section>
         <section class="container p-0" id="order-modal-container">

@@ -2,26 +2,41 @@ window.onload = () => {
     /**********************************************************************
      ** New prototypes                                                    *
      **********************************************************************/
-    HTMLElement.prototype.show = function () {
+    HTMLElement.prototype.show = function (classe = 'd-flex') {
         this.classList.remove('d-none');
-        this.classList.add('d-flex');
+        this.classList.add(classe);
     };
 
-    HTMLElement.prototype.hide = function () {
+    HTMLElement.prototype.hide = function (classe = 'd-flex') {
         this.classList.add('d-none');
-        this.classList.remove('d-flex');
+        this.classList.remove(classe);
     };
 
     /**********************************************************************
      ** HOME - réalisation des cartes par l'appel de la fonction loadPage *
      **********************************************************************/
     // permet d'initialiser l'affichage des prix
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('fr-FR', {
+    const formatPrice = (price, locale = 'fr-FR') => {
+        return new Intl.NumberFormat(locale, {
             style: 'currency',
             currency: 'EUR',
             minimumFractionDigits: 0,
-        }).format(price / 100);
+        }).format(price);
+    };
+
+    const reverseFormatNumber = (stringNumber, locale = 'fr-FR') => {
+        var thousandSeparator = Intl.NumberFormat(locale)
+            .format(11111)
+            .replace(/\p{Number}/gu, '');
+        var decimalSeparator = Intl.NumberFormat(locale)
+            .format(1.1)
+            .replace(/\p{Number}/gu, '');
+
+        return parseFloat(
+            stringNumber
+                .replace(new RegExp('\\' + thousandSeparator, 'g'), '')
+                .replace(new RegExp('\\' + decimalSeparator), '.'),
+        );
     };
 
     const createCard = async (i, camera) => {
@@ -31,19 +46,19 @@ window.onload = () => {
 
         // prettier-ignore
         let template =
-    '<form action="#" method="GET" id="' + id + '_form">\
+            '<form action="#" method="GET" id="' + id + '_form">\
         <input type="hidden" value="" name="id" id="' + id + '_id" />\
         <img src="" class="card-img-top card-img-index" alt="" />\
         <div class="card-body">\
             <h5 class="card-title"></h5>\
             <p class="card-text unstretched-link"></p>\
             <ul class="list-group list-group-flush">\
-                <li class="list-group-item unstretched-link" id="' + id + '_rate" >Prix : </li>\
-                <li class="list-group-item">\
+                <li class="list-group-item unstretched-link"><span>Prix : </span><span id="' + id + '_price" ></span></li>\
+                <li class="list-group-item unstretched-link">\
                     <select class="form-select inputGroupSelect01 unstretched-link" id="' + id + '_lenses">\
                     <option value="" selected>Lentilles</option>\
                     </select>\
-                <li class="list-group-item">\
+                <li class="list-group-item unstretched-link">\
                     <select class="form-select inputGroupSelect02 unstretched-link" id="' + id + '_quantity">\
                         <option value="0" selected>Quantité</option>\
                         <option value="1">1</option>\
@@ -55,8 +70,8 @@ window.onload = () => {
                 </li>\
             </ul>\
             <span id="' + id + '_select-error" class="text-danger d-none">Veuillez sélectionner une valeur</span>\
-            <div class="row ">\
-                <div class="col-auto text-left">\
+            <div class="row">\
+                <div class="col-auto text-left unstretched-link ">\
                     <input type="submit" class="unstretched-link btn btn-success" value="Ajouter au panier" />\
                 </div>\
                 <div class="col-auto text-right position-static">\
@@ -96,8 +111,8 @@ window.onload = () => {
             lenses.innerHTML += `<option value="${lense}">${lense}</option>`;
         }
 
-        let prix = document.querySelector(`#${id} #${id}_rate`);
-        prix.textContent += formatPrice(camera.price);
+        let prix = document.querySelector(`#${id} #${id}_price`);
+        prix.textContent += formatPrice(camera.price / 100);
 
         let link = document.querySelector(`#${id} #${id}_link`);
         link.href = 'produit.html?id=' + camera._id;
@@ -133,8 +148,8 @@ window.onload = () => {
             lenses.innerHTML += `<option value="${lense}">${lense}</option>`;
         }
 
-        let prix = document.querySelector(`#product-price`);
-        prix.textContent += formatPrice(camera.price);
+        let prix = document.querySelector(`#${id} #${id}_price`);
+        prix.textContent += formatPrice(camera.price / 100);
 
         document.querySelector(`#${id}_form`).addEventListener('submit', setPanier);
     };
@@ -250,7 +265,7 @@ window.onload = () => {
     const getPosition = (tab, id, lentille) => {
         console.log('Function', 'getPosition()');
         for (let i = 0; i < tab.length; i++) {
-            if (tab[i]['lents'] == lentille && tab[i]['id'] == id) {
+            if (tab[i]['lenses'] == lentille && tab[i]['id'] == id) {
                 return i;
             }
         }
@@ -261,26 +276,28 @@ window.onload = () => {
         /**
          * TODO List
          * [x] Ajouter dans le panier depuis la page produit
-         * [ ] Bouton supprimer : Supprime un élément du panier
-         *  [ ] Si plus d'article, set styles
+         * [x] Bouton supprimer : Supprime un élément du panier
+         *  [x] Si plus d'article, set styles
          * [x] Ajout dans le panier :
          *  [x] Vérifier si qté & lentilles non vide
          *  [x] Si produit existe déjà avec même lentille
-         * [ ] Set quantité => set panier
-         * [ ] realiser la boucle pour les cartes dans la page order afficher et dupliquer
-         * [ ] réaliser les sous totaux dynamique
-         * [ ] realiser le total dynamique
+         * [x] Set quantité => set panier
+         *  [x] réaliser les sous totaux dynamique
+         *  [x] realiser le total dynamique
+         * [x] realiser la boucle pour les cartes dans la page order afficher et dupliquer
          * [x] Si panier vide
          *  [x] disable la partie form  ou le boutton a voir suivant style de page
          *  [x] Masquer article par défaut
          * [ ] Vérifier les qté avant envoi
-         * [ ] Adapter les id de la page produit avec home
+         * [v] Adapter les id de la page produit avec home
+         * [ ] Ajouter une span de notification d'ajout de l'article ds le panier
+         * [ ] Ajouter un modal de suppression du panier
+         * [ ] Lien en cliquant sur le nom du produit sur le panier
          */
 
         // Stop l'event du lien
         e.preventDefault();
 
-        console.log('Function', 'setPanier()');
         const form = e.target;
         // Récupère le numéro de l'article via l'id du formulaire
         let idData = form.getAttribute('id').match(/([\d]+)/)[0];
@@ -288,17 +305,20 @@ window.onload = () => {
 
         // Vérifie si une lentille et une quantité ont été sélectionnées
         let idArt = form.querySelector(`#${id} #${id}_id`);
-        let lents = form.querySelector(`#${id} #${id}_lenses`);
+        let lenses = form.querySelector(`#${id} #${id}_lenses`);
         let quantity = form.querySelector(`#${id} #${id}_quantity`);
         let msgError = form.querySelector(`#${id} #${id}_select-error`);
+        let name = form.querySelector(`#${id} h5`);
+        let price = form.querySelector(`#${id} #${id}_price`);
+        let img = form.querySelector(`#${id} img`);
         let error = false;
 
         // On vérifie qu'une lentille a été sélectionnée
-        if (lents.value == '') {
+        if (lenses.value == '') {
             error = true;
-            lents.classList.add('border-danger');
+            lenses.classList.add('border-danger');
         } else {
-            lents.classList.remove('border-danger');
+            lenses.classList.remove('border-danger');
         }
 
         // On vérifie qu'une quantité a été sélectionnée
@@ -321,7 +341,7 @@ window.onload = () => {
 
         console.log('Panier', panier);
         // Récupère la position de l'article dans le panier
-        let pos = getPosition(panier, idArt.value, lents.value);
+        let pos = getPosition(panier, idArt.value, lenses.value);
         // Si l'article est déjà dans le panier
         if (pos >= 0) {
             panier[pos]['quantity'] += parseInt(quantity.value);
@@ -329,9 +349,12 @@ window.onload = () => {
             // Création d'un objet pour stocker les éléments du panier
             // prettier-ignore
             let donneesPanier = {
-                id      : idArt.value,
+                id: idArt.value,
+                img: img.src,
+                name: name.textContent,
+                price: price.textContent,
                 quantity: parseInt(quantity.value),
-                lents   : lents.value,
+                lenses: lenses.value,
             };
             // Ajoute le produit au panier tableau
             panier.push(donneesPanier);
@@ -341,31 +364,134 @@ window.onload = () => {
         console.log('Produit ajouté dans le panier.');
     };
 
-    panierPage = () => {
+    const setDisplayPanier = (nb, elemsEmpty, elemsFull) => {
+        let elemsToShow = []; // Tableau des éléments que l'on souhaite afficher
+        let elemsToHide = []; // Tableau des éléments que l'on souhaite masquer
+        if (nb > 0) {
+            elemsToShow = elemsFull;
+            elemsToHide = elemsEmpty;
+        } else {
+            elemsToShow = elemsEmpty;
+            elemsToHide = elemsFull;
+        }
+        elemsToShow.forEach((elem) => document.getElementById(elem).show());
+        elemsToHide.forEach((elem) => document.getElementById(elem).hide());
+    };
+
+    const panierPage = () => {
         console.log('Function', 'panierPage()');
         let panier = getPanier();
         let elemsBasketFull = [
             'order-title',
-            'order-card-container',
             'order-total',
             'order-modal-container',
             'order-alert-contentfull',
             'order-alert-title',
         ];
         let elemsBasketEmpty = ['basket-empty', 'order-alert-contentempty'];
-        let elemsToShow = []; // Tableau des éléments que l'on souhaite afficher
-        let elemsToHide = []; // Tableau des éléments que l'on souhaite masquer
-        if (panier.length > 0) {
-            console.log(panier);
-            elemsToShow = elemsBasketFull;
-            elemsToHide = elemsBasketEmpty;
-        } else {
-            elemsToShow = elemsBasketEmpty;
-            elemsToHide = elemsBasketFull;
-            console.log('PANIER VIDE !!! Bouh !!!! Donne nous tes sous !!!!');
+        document.getElementById('cards_0').show();
+        setDisplayPanier(panier.length, elemsBasketEmpty, elemsBasketFull);
+
+        let total = 0;
+        for (let i = 0; i < panier.length; i++) {
+            let id = 'cards_' + i;
+            let card;
+
+            // Si y'a plus d'un élément, on clone le premier élément
+            if (i > 0) {
+                // Clone le premier card
+                card = document.querySelector(`#cards_0`).cloneNode(true);
+                // Ajoute au DOM
+                document.querySelector('#list_cards').appendChild(card);
+                // Remplace les id cards_0 par l'id dynamique
+                card.outerHTML = card.outerHTML.replaceAll('cards_0', 'cards_' + i);
+            }
+            document.querySelector(`#${id} #${id}_id`).value = panier[i].id;
+            document.querySelector(`#${id} #${id}_lenses`).textContent = panier[i].lenses;
+            document.querySelector(`#${id} #${id}_price`).textContent = panier[i].price;
+            document.querySelector(`#${id} h5`).textContent = panier[i].name;
+            document.querySelector(`#${id} img`).src = panier[i].img;
+
+            let options = '';
+            let nMax = panier[i].quantity > 5 ? panier[i].quantity : 5; //valeur minimale à 5.
+            for (let n = 1; n <= nMax; n++) {
+                let selected = panier[i].quantity == n ? 'selected' : '';
+                options += `<option value="${n}" ${selected}>${n}</option>`;
+            }
+            document.querySelector(`#${id} #${id}_quantity`).innerHTML = options;
+
+            let subTotal = panier[i].quantity * reverseFormatNumber(panier[i].price);
+            document.querySelector(`#${id} #${id}_subtotal`).textContent = formatPrice(subTotal);
+
+            total += subTotal;
+
+            let changeQuantity = document.querySelector(`#${id}_quantity`);
+            let buttonRemove = document.querySelector(`#${id}_remove`);
+            buttonRemove.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('button supprimer');
+                // Supprimer l'élément du tableau panier
+                const bt = e.target;
+                // Récupère le numéro de l'article via l'id du button
+                let idData = bt.getAttribute('id').match(/([\d]+)/)[0];
+                let id = 'cards_' + idData;
+
+                // Récupère la position de l'article dans le panier à l'aide de son id et de la lentille
+                let pos = getPosition(
+                    panier,
+                    document.querySelector(`#${id}_id`).value,
+                    document.querySelector(`#${id}_lenses`).textContent,
+                );
+                // Supprime l'élément à la position pos (le 1 signifie 1 élément supprimé)
+                panier.splice(pos, 1);
+
+                // Mise a jour du prix à la supression par la soustraction du sous-total au total
+                total -= reverseFormatNumber(document.querySelector(`#${id} #${id}_subtotal`).textContent);
+                document.querySelector(`#cards_total`).textContent = formatPrice(total);
+
+                // Met à jour le panier
+                localStorage.set('panier', panier);
+                // Retire l'élémen du DOM
+                document.querySelector(`#${id}`).remove();
+                // Met à jour la page s'il n'y a plus d'éléments dans le panier
+                setDisplayPanier(panier.length, elemsBasketEmpty, elemsBasketFull);
+            });
+            changeQuantity.addEventListener('change', (e) => {
+                e.preventDefault();
+                console.log('changement quantité');
+                // Supprimer l'élément du tableau panier
+                const bt = e.target;
+                // Récupère le numéro de l'article via l'id du button
+                let idData = bt.getAttribute('id').match(/([\d]+)/)[0];
+                let id = 'cards_' + idData;
+
+                // Récupère la position de l'article dans le panier à l'aide de son id et de la lentille
+                let pos = getPosition(
+                    panier,
+                    document.querySelector(`#${id}_id`).value,
+                    document.querySelector(`#${id}_lenses`).textContent,
+                );
+                // Supprime l'élément à la position pos (le 1 signifie 1 élément supprimé)
+                panier[pos].quantity = document.querySelector(`#${id}_quantity`).value;
+
+                // Retire l'ancien sous-total du total
+                total -= reverseFormatNumber(document.querySelector(`#${id} #${id}_subtotal`).textContent);
+                // Calcul le nouveau sous-total
+                let subTotal = panier[pos].quantity * reverseFormatNumber(panier[pos].price);
+                document.querySelector(`#${id} #${id}_subtotal`).textContent = formatPrice(subTotal);
+                // Calcul le nouveau total
+                total += subTotal;
+                // Mise a jour du total
+                document.querySelector(`#cards_total`).textContent = formatPrice(total);
+
+                // Met à jour le panier
+                localStorage.set('panier', panier);
+            });
+            
         }
-        elemsToShow.forEach((elem) => document.getElementById(elem).show());
-        elemsToHide.forEach((elem) => document.getElementById(elem).hide());
+        console.log(panier);
+
+        document.querySelector(`#cards_total`).textContent = formatPrice(total);
     };
 
     /***************************************************
@@ -385,42 +511,34 @@ window.onload = () => {
         panierPage();
     }
 
-    /*const getProducts = (url) => {
-        $.get(url, (data) => {
-            console.log('Function', 'get()');
-            //! Verifier si objet vide, si oui afficher erreur !
-            // On lance le script
-            loadPage(data);
-        });
-    };*/
-
     /***************************************************
      ** Modification visuel du selecteur qualité       *
      **************************************************/
 
-    let media_sm = false;
-
-    // Modifie le contenu du selecteur qte
-    function changeOptionContent() {
-        // Si la taille de l'écran est plus petit que 500px
-        if (window.matchMedia('(max-width: 766px)').matches) {
-            // Sm
-            if (!media_sm) {
-                // Si ce n'est pas déjà en sm
-                document.querySelector('.option-content-qte').textContent = 'Qté';
-                media_sm = true;
-            }
-        } else {
-            // Default
-            if (media_sm) {
-                // Si c'est en sm
-                document.querySelector('.option-content-qte').textContent = 'Quantité';
-                media_sm = false;
+    /* let media_sm = false;
+    
+        // Modifie le contenu du selecteur qte
+        function changeOptionContent() {
+            // Si la taille de l'écran est plus petit que 500px
+            if (window.matchMedia('(max-width: 766px)').matches) {
+                // Sm
+                if (!media_sm) {
+                    // Si ce n'est pas déjà en sm
+                    document.querySelector('.option-content-qte').textContent = 'Qté';
+                    media_sm = true;
+                }
+            } else {
+                // Default
+                if (media_sm) {
+                    // Si c'est en sm
+                    document.querySelector('.option-content-qte').textContent = 'Quantité';
+                    media_sm = false;
+                }
             }
         }
-    }
-    //// Appelle une fois la fonction au cas où l'écran soit sm
-    ////changeOptionContent();
-    //// Lorsque la taille de l'écran est modifiée
-    ////window.addEventListener('resize', changeOptionContent);
+        //// Appelle une fois la fonction au cas où l'écran soit sm
+        ////changeOptionContent();
+        //// Lorsque la taille de l'écran est modifiée
+        ////window.addEventListener('resize', changeOptionContent);
+        */
 };
