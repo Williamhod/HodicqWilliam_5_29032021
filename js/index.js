@@ -70,6 +70,7 @@ window.onload = () => {
                 </li>\
             </ul>\
             <span id="' + id + '_select-error" class="text-danger d-none">Veuillez sélectionner une valeur</span>\
+            <span id="' + id + '_select-true" class="text-success d-none">Votre article a bien été ajouter !</span>\
             <div class="row">\
                 <div class="col-auto text-left unstretched-link ">\
                     <input type="submit" class="unstretched-link btn btn-success" value="Ajouter au panier" />\
@@ -308,6 +309,7 @@ window.onload = () => {
         let lenses = form.querySelector(`#${id} #${id}_lenses`);
         let quantity = form.querySelector(`#${id} #${id}_quantity`);
         let msgError = form.querySelector(`#${id} #${id}_select-error`);
+        let msgOk = form.querySelector(`#${id} #${id}_select-true`);
         let name = form.querySelector(`#${id} h5`);
         let price = form.querySelector(`#${id} #${id}_price`);
         let img = form.querySelector(`#${id} img`);
@@ -335,6 +337,7 @@ window.onload = () => {
             return false;
         }
         msgError.hide();
+        msgOk.show();
 
         // Récupère le panier et le stocke dans un tableau
         let panier = getPanier();
