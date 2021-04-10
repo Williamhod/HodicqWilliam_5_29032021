@@ -70,7 +70,7 @@ window.onload = () => {
                 </li>\
             </ul>\
             <span id="' + id + '_select-error" class="text-danger d-none">Veuillez sélectionner une valeur</span>\
-            <span id="' + id + '_select-true" class="text-success d-none">Votre article a bien été ajouter !</span>\
+            <span id="' + id + '_select-true" class="text-success d-none">Votre article a bien été ajouté !</span>\
             <div class="row">\
                 <div class="col-auto text-left unstretched-link ">\
                     <input type="submit" class="unstretched-link btn btn-success" value="Ajouter au panier" />\
@@ -291,7 +291,7 @@ window.onload = () => {
          *  [x] Masquer article par défaut
          * [ ] Vérifier les qté avant envoi
          * [v] Adapter les id de la page produit avec home
-         * [ ] Ajouter une span de notification d'ajout de l'article ds le panier
+         * [x] Ajouter une span de notification d'ajout de l'article ds le panier
          * [ ] Ajouter un modal de suppression du panier
          * [ ] Lien en cliquant sur le nom du produit sur le panier
          */
