@@ -127,12 +127,17 @@
                             class="col-0 col-lg-2 align-manuel-item justify-content-lg-center ml-1 ml-md-0 pl-0 pr-0 pl-md-2 mt-md-2 mt-lg-0 border-right"
                         >
                             <select class="form-select inputGroupSelect02" id="cards_0_quantity"></select>
-                            <button class="btn border-secondary p-1 mx-2 ml-3 btn-order" id="cards_0_remove">
+                            <button
+                                class="btn border-secondary p-1 mx-2 ml-3 btn-order"
+                                id="cards_0_remove"
+                                data-toggle="modal"
+                                data-target="#modalConfirmRemove"
+                            >
                                 Supprimer
                             </button>
                         </div>
                         <div class="col-0 col-lg-2 align-manuel-item pl-0 pl-md-2 ml-1 ml-md-0">
-                            <p>Sous-total : <span id="cards_0_subtotal"></span></p>
+                            <span>Sous-total : <span id="cards_0_subtotal"></span></span>
                         </div>
                     </form>
                 </article>
@@ -141,7 +146,7 @@
                 <h3>Total : <span id="cards_total"></span></h3>
             </div>
         </section>
-        <section class="container p-0 justify-content-center" id="order-modal-container">
+        <section class="container p-0" id="order-modal-container">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-content">
@@ -249,7 +254,7 @@
             aria-hidden="true"
             id="bannerformmodal"
         >
-            <div class="modal-dialog modal-lg modal-dialog-centered mx-auto">
+            <div class="modal-dialog modal-md modal-dialog-centered mx-auto">
                 <div class="modal-content">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -319,11 +324,45 @@
                 </div>
             </div>
         </div>
+        <!-- Modal Bouton Supprimer -->
+        <div
+            class="modal fade"
+            id="modalConfirmRemove"
+            data-backdrop="static"
+            data-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="modalConfirmRemoveLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalConfirmRemoveLabel">Supprimer un article</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalConfirmRemoveBody">
+                        Souhaitez-vous retirer l'article
+                        <span id="modal-body-article" class="font-italic font-weight-bold"></span> avec la lentille
+                        <span id="modal-body-lentilles" class="font-italic font-weight-bold"></span> de votre panier ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Non, je garde l'article</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="modalConfirmRemoveValid">
+                            Oui, je supprime l'article
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Script-->
         <script src="./node_modules/jquery/dist/jquery.min.js"></script>
         <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="./js/extendStorage.js"></script>
-        <script src="./js/index.js"></script>
+        <script src="./js/prototypes.js"></script>
+        <script src="./js/panier.js"></script>
+        <script src="./js/order.app.js"></script>
     </body>
 </html>

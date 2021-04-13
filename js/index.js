@@ -212,7 +212,7 @@ window.onload = () => {
         });
 
         // Définit l'url + id produit (si page produit)
-        let url = 'http://localhost:3000/api/cameras/';
+        let url = 'cameras_sauvegarde.json';
 
         // recuperation des données de l api pour les mettre dans la fonction loadPage
         datas = await getProducts(url);

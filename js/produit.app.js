@@ -1,0 +1,5 @@
+class Produit {
+    constructor() {
+        this.
+    }
+}
