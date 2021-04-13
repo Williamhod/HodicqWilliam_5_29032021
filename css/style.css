@@ -91,3 +91,23 @@ select.border-danger {
 .btn-order {
     background-color: rgb(255, 255, 255) !important;
 }
+
+/*taille mini du span des champs d erreur ou validation basket*/
+
+.msg-select{
+    min-height: 1.5rem;
+}
+
+
+/*modal contact sizing*/
+
+.modal-dialog{
+    width: 50%!important;
+}
+
+@media only screen and (max-width: 766px) {
+    
+    .modal-dialog{
+        width: 100%!important;
+    }
+}

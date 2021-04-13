@@ -1,6 +1,6 @@
 window.onload = () => {
     /**********************************************************************
-     ** New prototypes                                                    *
+     ** Fonction - Show et hide un item                                   *
      **********************************************************************/
     HTMLElement.prototype.show = function (classe = 'd-flex') {
         this.classList.remove('d-none');
@@ -69,8 +69,7 @@ window.onload = () => {
                     </select>\
                 </li>\
             </ul>\
-            <span id="' + id + '_select-error" class="text-danger d-none">Veuillez sélectionner une valeur</span>\
-            <span id="' + id + '_select-true" class="text-success d-none">Votre article a bien été ajouté !</span>\
+            <span id="' + id + '_select-msg" class="d-flex msg-select"></span>\
             <div class="row">\
                 <div class="col-auto text-left unstretched-link ">\
                     <input type="submit" class="unstretched-link btn btn-success" value="Ajouter au panier" />\
@@ -123,7 +122,7 @@ window.onload = () => {
     };
 
     /****************************************************************************************
-     ** Produit - Implantation des données dans la carte par l'appel de la fonction loadPage  *
+     ** Produit - Implantation des données dans la carte par l'appel de la fonction loadPage*
      ****************************************************************************************/
     const editCard = async (i, camera) => {
         console.log('Function', 'editCard()');
@@ -208,11 +207,12 @@ window.onload = () => {
         // Récupère les params get pour l'id de l'objet afin d'avoir une fiche produit
         var $_GET = [];
         window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (a, name, value) => {
+            //recupere les paramètres de l url
             $_GET[name] = value;
         });
 
         // Définit l'url + id produit (si page produit)
-        let url = 'cameras_sauvegarde.json';
+        let url = 'http://localhost:3000/api/cameras/';
 
         // recuperation des données de l api pour les mettre dans la fonction loadPage
         datas = await getProducts(url);
@@ -308,8 +308,7 @@ window.onload = () => {
         let idArt = form.querySelector(`#${id} #${id}_id`);
         let lenses = form.querySelector(`#${id} #${id}_lenses`);
         let quantity = form.querySelector(`#${id} #${id}_quantity`);
-        let msgError = form.querySelector(`#${id} #${id}_select-error`);
-        let msgOk = form.querySelector(`#${id} #${id}_select-true`);
+        let msgSelect = form.querySelector(`#${id} #${id}_select-msg`);
         let name = form.querySelector(`#${id} h5`);
         let price = form.querySelector(`#${id} #${id}_price`);
         let img = form.querySelector(`#${id} img`);
@@ -331,13 +330,23 @@ window.onload = () => {
             quantity.classList.remove('border-danger');
         }
 
+        msgSelect.textContent = '';
         // Si aucun des deux, on affiche une erreur et on stop l'ajout dans le panier
         if (error) {
-            msgError.show();
+            msgSelect.classList.add('text-danger');
+            msgSelect.textContent = 'Veuillez sélectionner une valeur';
             return false;
         }
-        msgError.hide();
-        msgOk.show();
+        // Si l'article est bien ajouté on notifie de l'ajout pendant 1.5 sec
+        msgSelect.classList.remove('text-danger');
+        msgSelect.classList.add('text-success');
+        msgSelect.textContent = 'Votre article a bien été ajouté !';
+
+        // On remet un content vide mais la span garde la meme taille pour pas modifier les tailles des cards
+        setTimeout(() => {
+            msgSelect.textContent = '';
+            msgSelect.classList.remove('text-success');
+        }, 1500);
 
         // Récupère le panier et le stocke dans un tableau
         let panier = getPanier();
@@ -390,6 +399,7 @@ window.onload = () => {
             'order-modal-container',
             'order-alert-contentfull',
             'order-alert-title',
+            'list_cards',
         ];
         let elemsBasketEmpty = ['basket-empty', 'order-alert-contentempty'];
         document.getElementById('cards_0').show();
@@ -490,7 +500,6 @@ window.onload = () => {
                 // Met à jour le panier
                 localStorage.set('panier', panier);
             });
-            
         }
         console.log(panier);
 
@@ -513,6 +522,18 @@ window.onload = () => {
         //
         panierPage();
     }
+
+    /***************************************************
+     ** Modal- Confirmation de commande                *
+     **************************************************/
+    /**
+     * TODO List
+     * [ ] validation des champs
+     * [ ] redirection apres validation des champs depuis le btn du modal
+     * [ ] voir pour la génération de l'id de commande
+     * [ ] X
+     * [ ] X
+     */
 
     /***************************************************
      ** Modification visuel du selecteur qualité       *
@@ -540,8 +561,8 @@ window.onload = () => {
             }
         }
         //// Appelle une fois la fonction au cas où l'écran soit sm
-        ////changeOptionContent();
+        //changeOptionContent();
         //// Lorsque la taille de l'écran est modifiée
-        ////window.addEventListener('resize', changeOptionContent);
+        //window.addEventListener('resize', changeOptionContent);
         */
 };
