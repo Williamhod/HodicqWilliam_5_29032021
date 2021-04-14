@@ -59,3 +59,46 @@ window.onload = () => {
         bt_supprimer_target = null;
     });
 }
+
+ /***************************************************
+     ** Modal- Confirmation de commande                *
+     **************************************************/
+    /**
+     * TODO List
+     * [ ] validation des champs
+     * [ ] redirection apres validation des champs depuis le btn du modal
+     * [ ] voir pour la génération de l'id de commande
+     * [ ] X
+     * [ ] X
+     */
+
+    /***************************************************
+     ** Modification visuel du selecteur qualité       *
+     **************************************************/
+
+    /* let media_sm = false;
+    
+        // Modifie le contenu du selecteur qte
+        function changeOptionContent() {
+            // Si la taille de l'écran est plus petit que 500px
+            if (window.matchMedia('(max-width: 766px)').matches) {
+                // Sm
+                if (!media_sm) {
+                    // Si ce n'est pas déjà en sm
+                    document.querySelector('.option-content-qte').textContent = 'Qté';
+                    media_sm = true;
+                }
+            } else {
+                // Default
+                if (media_sm) {
+                    // Si c'est en sm
+                    document.querySelector('.option-content-qte').textContent = 'Quantité';
+                    media_sm = false;
+                }
+            }
+        }
+        //// Appelle une fois la fonction au cas où l'écran soit sm
+        //changeOptionContent();
+        //// Lorsque la taille de l'écran est modifiée
+        //window.addEventListener('resize', changeOptionContent);
+        */

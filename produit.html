@@ -74,7 +74,7 @@
             </div>
         </header>
 
-        <section class="container">
+        <section class="container" id="message-valid">
             <input type="hidden" id="page" value="product" />
             <div class="alert alert-light alert-dismissible fade show mt-4" role="alert">
                 <h1 class="alert-heading text-center">Voici votre article</h1>
@@ -84,6 +84,18 @@
                 </button>
             </div>
         </section>
+
+        <section class="container d-none" id="message-error">
+            <input type="hidden" id="page" value="product" />
+            <div class="alert alert-light alert-dismissible fade show mt-4" role="alert">
+                <h1 class="alert-heading text-center">Erreur</h1>
+                <p class="text-center text-danger">Produit non trouvé, veuillez retourner sur la page d'accueil.</p>
+                <p class="text-center btn-dark "><a class="text-white" href="index.html">Retour sur la page d'accueil</a></p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </section> 
         <section class="container mt-3" id="cards_0">
             <form action="#" method="GET" id="cards_0_form">
                 <input type="hidden" value="" name="id" id="cards_0_id" />
@@ -228,6 +240,9 @@
         <script src="./node_modules/jquery/dist/jquery.min.js"></script>
         <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="./js/extendStorage.js"></script>
-        <script src="./js/index.js"></script>
+        <script src="./js/prototypes.js"></script>
+        <script src="./js/panier.js"></script>
+        <script src="./js/api.js"></script>
+        <script src="./js/produit.app.js"></script>
     </body>
 </html>

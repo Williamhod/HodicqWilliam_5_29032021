@@ -1,4 +1,26 @@
 /**
+         * TODO List
+         * [x] Ajouter dans le panier depuis la page produit
+         * [x] Bouton supprimer : Supprime un élément du panier
+         *  [x] Si plus d'article, set styles
+         * [x] Ajout dans le panier :
+         *  [x] Vérifier si qté & lentilles non vide
+         *  [x] Si produit existe déjà avec même lentille
+         * [x] Set quantité => set panier
+         *  [x] réaliser les sous totaux dynamique
+         *  [x] realiser le total dynamique
+         * [x] realiser la boucle pour les cartes dans la page order afficher et dupliquer
+         * [x] Si panier vide
+         *  [x] disable la partie form  ou le boutton a voir suivant style de page
+         *  [x] Masquer article par défaut
+         * [ ] Vérifier les qté avant envoi
+         * [v] Adapter les id de la page produit avec home
+         * [x] Ajouter une span de notification d'ajout de l'article ds le panier
+         * [ ] Ajouter un modal de suppression du panier
+         * [ ] Lien en cliquant sur le nom du produit sur le panier
+         */
+
+/**
  *
  */
 class Panier {
@@ -12,7 +34,19 @@ class Panier {
         this.total = 0;
         this.options = options;
         this.quantityMax = 5; // TODO mettre une quantité max de 5 article present dans le panier
+
+        //this.createListener();
     }
+
+    /*createListener = () => {
+        console.log('create event');
+            window.addEventListener('storage', () => {
+                console.log('panier modifié !!!!!!!!!!!');
+                this.loadPanier();
+                console.log(this.tabProduits);
+                this.setDisplayPanier();
+            });
+    }*/
 
     setCookie = () => {
         localStorage.set(this.nameCookie, this.tabProduits);
@@ -66,6 +100,7 @@ class Panier {
             // Si y'a plus d'un élément, on clone le premier élément
             if (i == 0) {
                 // On affiche le premier élément (le seul disponible dans le html)
+                //this.getPanierElement('parent').show();
                 this.getPanierElement('article', 0, '#').show();
             } else {
                 // Clone le premier card
@@ -208,10 +243,102 @@ class Panier {
         this.getPanierElement('total', id).textContent = this.total.numberFormat();
 
         // Met à jour le panier
-        //this.setCookie();
+        this.setCookie();
         // Retire l'élémen du DOM
         this.getPanierElement('article', articleID, '#').remove();
         // Met à jour la page s'il n'y a plus d'éléments dans le panier
         this.setDisplayPanier();
+    };
+
+    setPanier = (e) => {
+
+        console.log("Panier.setPanier()");
+        // Stop l'event du lien
+        e.preventDefault();
+
+        let form = e.target;
+
+        //let bt = this.lastEvent.action == 'remove' ? this.lastEvent.target : null;
+        let articleID = form.numberID();
+
+        // Récupère le numéro de l'article via l'id du button
+        let id = 'cards_' + articleID;
+
+        // Vérifie si une lentille et une quantité ont été sélectionnées
+        /*let idArt = form.querySelector(`#${id} #${id}_id`);
+        let lenses = form.querySelector(`#${id} #${id}_lenses`);
+        let quantity = form.querySelector(`#${id} #${id}_quantity`);
+        let msgSelect = form.querySelector(`#${id} #${id}_select-msg`);
+        let name = form.querySelector(`#${id} h5`);
+        let price = form.querySelector(`#${id} #${id}_price`);
+        let img = form.querySelector(`#${id} img`);*/
+
+        let idArt = form.querySelector(`#${id} #${id}_id`);
+        //let lenses = this.getPanierElement('lentilles', id);
+        let lenses = form.querySelector(`#${id} #${id}_lenses`);
+        let quantity = form.querySelector(`#${id} #${id}_quantity`);
+        let msgSelect = form.querySelector(`#${id} #${id}_select-msg`);
+        let name = form.querySelector(`#${id} h5`);
+        let price = form.querySelector(`#${id} #${id}_price`);
+        let img = form.querySelector(`#${id} img`);
+        let error = false;
+
+        // On vérifie qu'une lentille a été sélectionnée
+        if (lenses.value == '') {
+            error = true;
+            lenses.classList.add('border-danger');
+        } else {
+            lenses.classList.remove('border-danger');
+        }
+
+        // On vérifie qu'une quantité a été sélectionnée
+        if (quantity.value == 0) {
+            error = true;
+            quantity.classList.add('border-danger');
+        } else {
+            quantity.classList.remove('border-danger');
+        }
+
+        msgSelect.textContent = '';
+        // Si aucun des deux, on affiche une erreur et on stop l'ajout dans le panier
+        if (error) {
+            msgSelect.classList.add('text-danger');
+            msgSelect.textContent = 'Veuillez sélectionner une valeur';
+            return false;
+        }
+        // Si l'article est bien ajouté on notifie de l'ajout pendant 1.5 sec
+        msgSelect.classList.remove('text-danger');
+        msgSelect.classList.add('text-success');
+        msgSelect.textContent = 'Votre article a bien été ajouté !';
+
+        // On remet un content vide mais la span garde la meme taille pour pas modifier les tailles des cards
+        setTimeout(() => {
+            msgSelect.textContent = '';
+            msgSelect.classList.remove('text-success');
+        }, 1500);
+
+        console.log('Panier', this.tabProduits);
+        // Récupère la position de l'article dans le panier
+        let pos = this.getPosition(idArt.value, lenses.value);
+        // Si l'article est déjà dans le panier
+        if (pos >= 0) {
+            this.tabProduits[pos]['quantity'] += parseInt(quantity.value);
+        } else {
+            // Création d'un objet pour stocker les éléments du panier
+            // prettier-ignore
+            let donneesPanier = {
+                id: idArt.value,
+                img: img.src,
+                name: name.textContent,
+                price: price.textContent,
+                quantity: parseInt(quantity.value),
+                lenses: lenses.value,
+            };
+            // Ajoute le produit au panier tableau
+            this.tabProduits.push(donneesPanier);
+        }
+        // Met à jour le panier
+        this.setCookie();
+        console.log('Produit ajouté dans le panier.');
     };
 }

@@ -1,11 +1,11 @@
 HTMLElement.prototype.show = function (classe = 'd-flex') {
     this.classList.remove('d-none');
-    this.classList.add(classe);
+    if( classe != '') this.classList.add(classe);
 };
 
 HTMLElement.prototype.hide = function (classe = 'd-flex') {
     this.classList.add('d-none');
-    this.classList.remove(classe);
+    if( classe != '') this.classList.remove(classe);
 };
 
 HTMLSelectElement.prototype.addOption = function (value, text, selected = false) {
@@ -52,4 +52,14 @@ Number.prototype.numberFormat = function (locale = 'fr-FR') {
 
 HTMLElement.prototype.numberID = function() {
     return this.getAttribute('id').match(/([\d]+)/)[0];
+}
+
+String.prototype.getCookies = function() {
+    // Récupère les params get pour l'id de l'objet afin d'avoir une fiche produit
+    let tab = [];
+    this.replace(/[?&]+([^=&]+)=([^&]*)/gi, (a, name, value) => {
+        //recupere les paramètres de l url
+        tab[name] = value;
+    });
+    return tab;
 }
