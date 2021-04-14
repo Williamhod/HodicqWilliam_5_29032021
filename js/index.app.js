@@ -1,13 +1,16 @@
 window.onload = () => {
-let monPanier = new Panier('panier');
+    // Création de l'objet panier avec le cookie 'panier'
+    //let monApi = new Api('panier', 'cameras_sauvegarde.json');
+    let monApi = new Api('panier', 'http://localhost:3000/api/cameras/');
+    let monPanier = monApi.getPanier();
 
-const createCard = async (i, camera) => {
-    console.log('Function', 'createCard()');
-    // Id de l'article (dans le code)
-    let id = 'cards_' + i;
+    const createCard = async (i, camera) => {
+        console.log('Function', 'createCard()');
+        // Id de l'article (dans le code)
+        let id = 'cards_' + i;
 
-    // prettier-ignore
-    let template =
+        // prettier-ignore
+        let template =
         '<form action="#" method="GET" id="' + id + '_form">\
     <input type="hidden" value="" name="id" id="' + id + '_id" />\
     <img src="" class="card-img-top card-img-index" alt="" />\
@@ -43,84 +46,79 @@ const createCard = async (i, camera) => {
     </div>\
  </form>';
 
-    // Création de l'article
-    let div = document.createElement('div');
-    div.id = id;
-    div.classList.add('card', 'mb-4', 'mx-2', 'border-0', 'shadow');
-    div.innerHTML = template;
-    document.querySelector('#list_cards').appendChild(div);
+        // Création de l'article
+        let div = document.createElement('div');
+        div.id = id;
+        div.classList.add('card', 'mb-4', 'mx-2', 'border-0', 'shadow');
+        div.innerHTML = template;
+        document.querySelector('#list_cards').appendChild(div);
 
-    document.querySelector(`#${id} #${id}_id`).value = camera._id;
+        document.querySelector(`#${id} #${id}_id`).value = camera._id;
 
-    //let img = document.querySelector('#' + id + ' img');
-    let img = document.querySelector(`#${id} img`);
-    // TODO Remettre après
-    //img.src = camera.imageUrl; // Récupération des données en mettant la fonction + le nom attribué dans l'api
-    img.src = 'images/vcam_' + (i + 1) + '.jpg';
-    img.alt = camera.name;
+        //let img = document.querySelector('#' + id + ' img');
+        let img = document.querySelector(`#${id} img`);
+        // TODO Remettre après
+        //img.src = camera.imageUrl; // Récupération des données en mettant la fonction + le nom attribué dans l'api
+        // Version Json
+        img.src = camera.imageUrl.replace('http://localhost:3000/', '');
+        img.alt = camera.name;
 
-    //let name = document.querySelector('#' + id + ' h5');
-    let name = document.querySelector(`#${id} h5`);
-    name.textContent = camera.name;
+        //let name = document.querySelector('#' + id + ' h5');
+        let name = document.querySelector(`#${id} h5`);
+        name.textContent = camera.name;
 
-    //let description = document.querySelector('#' + id + ' p');
-    let description = document.querySelector(`#${id} p`);
-    description.textContent = camera.description;
+        //let description = document.querySelector('#' + id + ' p');
+        let description = document.querySelector(`#${id} p`);
+        description.textContent = camera.description;
 
-    let lenses = document.querySelector(`#${id} #${id}_lenses`);
-    // Création d'une boucle pour extrapoler les valeurs du tableau lenses (de l'api) afin de les afficher à l'unité
-    for (let lense of camera.lenses) {
-        lenses.innerHTML += `<option value="${lense}">${lense}</option>`;
-    }
+        let lenses = document.querySelector(`#${id} #${id}_lenses`);
+        // Création d'une boucle pour extrapoler les valeurs du tableau lenses (de l'api) afin de les afficher à l'unité
+        for (let lense of camera.lenses) {
+            lenses.innerHTML += `<option value="${lense}">${lense}</option>`;
+        }
 
-    let prix = document.querySelector(`#${id} #${id}_price`);
-    prix.textContent += (camera.price / 100).numberFormat();
+        let prix = document.querySelector(`#${id} #${id}_price`);
+        prix.textContent += (camera.price / 100).numberFormat();
 
-    let link = document.querySelector(`#${id} #${id}_link`);
-    link.href = 'produit.html?id=' + camera._id;
+        let link = document.querySelector(`#${id} #${id}_link`);
+        link.href = 'produit.html?id=' + camera._id;
 
-    // Ajout de l'evenement sur le bouton Ajouter au panier
-    document.querySelector(`#${id} #${id}_form`).addEventListener('submit', monPanier.setPanier);
-};
+        // Ajout de l'evenement sur le bouton Ajouter au panier
+        document.querySelector(`#${id} #${id}_form`).addEventListener('submit', monPanier.setPanier);
+    };
 
-// le i permet d avoir l'indice de l article.
-let i = 0;
-// la fonction loadPage a ces données mise dans la fonction camera.
-const loadPage = (cameras) => {
-    console.log('Function', 'loadPage()');
-    console.log(cameras);
-    // Double la quantité de cameras pour les tests
-    //cameras.push(...cameras);
+    // le i permet d avoir l'indice de l article.
+    let i = 0;
+    // la fonction loadPage a ces données mise dans la fonction camera.
+    const loadPage = (cameras) => {
+        console.log('Function', 'loadPage()');
+        console.log(cameras);
+        // Double la quantité de cameras pour les tests
+        //cameras.push(...cameras);
 
-    // Si camaras est un tableau, cela signifie que l'id demandé n'a pas été trouvé
-    if (Array.isArray(cameras) && cameras.length > 0 ) {
-        /*if( cameras.length == 0 ) {
+        // Si camaras est un tableau, cela signifie que l'id demandé n'a pas été trouvé
+        if (Array.isArray(cameras) && cameras.length > 0) {
+            /*if( cameras.length == 0 ) {
             console.error('Erreur');
         } else {*/
             for (let camera of cameras) {
                 createCard(i, camera);
                 i++;
             }
-       // }
-    } else {
+            // }
+        } else {
             console.error('Erreur');
-    }
-};
+        }
+    };
 
-let datas = {};
-const loadDatas = async () => {
-    console.log('Function', 'loadDatas()');
+    let datas = {};
+    const loadDatas = async () => {
+        console.log('Function', 'loadDatas()');
 
-    // Définit l'url + id produit (si page produit)
-    let url = 'cameras_sauvegarde.json';
-    //let url = 'http://localhost:3000/api/cameras/';
+        // recuperation des données de l api pour les mettre dans la fonction loadPage
+        datas = await monApi.getProducts();
+        loadPage(datas);
+    };
 
-    // recuperation des données de l api pour les mettre dans la fonction loadPage
-    //datas = await getProducts(url);
-    datas = await new Api(url).getProducts(url);
-    loadPage(datas);
-};
-
-loadDatas();
-
+    loadDatas();
 };

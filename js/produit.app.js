@@ -1,15 +1,16 @@
 window.onload = () => {
-
-    let monPanier = new Panier('panier');
+    // Création de l'objet panier avec le cookie 'panier'
+    let monApi = new Api('panier', 'cameras_sauvegarde.json');
+    let monPanier = monApi.getPanier();
 
     const editCard = async (i, camera) => {
         console.log('Function', 'editCard()');
         // Id de l'article (dans le code)
         let id = 'cards_' + i;
-        let img = document.querySelector(`#product-img`);
+        let img = document.querySelector(`#${id} img`);
         // TODO Remettre après
-        //img.src = camera.imageUrl;
-        img.src = 'images/vcam_' + (i + 1) + '.jpg';
+        img.src = camera.imageUrl;
+        //img.src = 'images/vcam_' + (i + 1) + '.jpg';
         img.alt = camera.name;
 
         document.querySelector(`#${id}_id`).value = camera._id;
@@ -48,8 +49,7 @@ window.onload = () => {
             document.querySelector('#message-error').show('');
             document.querySelector('#cards_0').hide();
             document.querySelector('#message-valid').hide();
-            setTimeout(() => window.location = 'index.html', 5000);
-        
+            setTimeout(() => (window.location = 'index.html'), 5000);
         } else {
             console.log('card avec info id item');
             // Une seule camera
@@ -68,13 +68,8 @@ window.onload = () => {
             $_GET[name] = value;
         });
 
-        // Définit l'url + id produit (si page produit)
-        let url = 'cameras_sauvegarde.json';
-        //let url = 'http://localhost:3000/api/cameras/';
-
-        // recuperation des données de l api pour les mettre dans la fonction loadPage
-        //datas = await getProducts(url);
-        datas = await new Api(url).getProducts(url);
+        // NOTE Version avec le fichier json
+        datas = await monApi.getProducts();
         if (typeof $_GET['id'] === 'string') {
             datas.forEach((val) => {
                 if (val['_id'] == $_GET['id']) {
@@ -83,9 +78,14 @@ window.onload = () => {
                 }
             });
         }
+        // NOTE Version avec le lien localhost
+        /*if (typeof $_GET['id'] !== 'undefined') {
+            monApi.setUrl('http://localhost:3000/api/cameras/' + $_GET['id']);
+        }
+        datas = await monApi.getProducts();*/
+
         loadPage(datas);
     };
 
     loadDatas();
-
-};
+};;

@@ -317,6 +317,9 @@ class Panier {
             msgSelect.classList.remove('text-success');
         }, 1500);
 
+        // Remet à jour le contenu du panier avant d'ajouter les nouveaux éléments
+        this.tabProduits = this.loadPanier();
+
         console.log('Panier', this.tabProduits);
         // Récupère la position de l'article dans le panier
         let pos = this.getPosition(idArt.value, lenses.value);

@@ -1,36 +1,7 @@
 window.onload = () => {
-    // Options pour le panier
-    let options = {
-        // les élèments a voir quand le panier contient un article
-        elemsBasketFull: [ 
-            'order-title',
-            'order-total',
-            'order-modal-container',
-            'order-alert-contentfull',
-            'order-alert-title',
-        ],
-        // Les éléments à masquer lorsque le panier est vide
-        elemsBasketEmpty: ['basket-empty', 'order-alert-contentempty'],
-        // L'élément parent des éléments
-        elemsParentId: '#list_cards',
-        // Id distingant les éléments entre eux
-        elemsIds: 'cards_{{i}}',
-        // prettier-ignore
-        elemsBasket: {
-            idProduit: '#{{id}} #{{id}}_id',
-            lentilles: '#{{id}} #{{id}}_lenses',
-            prix: '#{{id}} #{{id}}_price',
-            nom: '#{{id}} h5',
-            image: '#{{id}} img',
-            quantity: '#{{id}} #{{id}}_quantity',
-            sousTotal: '#{{id}} #{{id}}_subtotal',
-            btRemove: '#{{id}}_remove',
-            total: '#cards_total',
-        },
-    };
-
     // Création de l'objet panier avec le cookie 'panier'
-    let panier = new Panier('panier', options);
+    let monApi = new Api('panier');
+    let panier = monApi.getPanier();
 
     // TODO Ajouter un loader
     panier.setDisplayPanier();
