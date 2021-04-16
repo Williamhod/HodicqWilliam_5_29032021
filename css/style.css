@@ -102,12 +102,15 @@ select.border-danger {
 /*modal contact sizing*/
 
 .modal-dialog{
-    width: 50%!important;
+    width: 100%!important;
+    max-width: 100%!important;
 }
+
+/*card index*/
 
 @media only screen and (max-width: 766px) {
     
-    .modal-dialog{
+    .w-md-100{
         width: 100%!important;
     }
 }

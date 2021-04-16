@@ -1,24 +1,24 @@
 /**
-         * TODO List
-         * [x] Ajouter dans le panier depuis la page produit
-         * [x] Bouton supprimer : Supprime un élément du panier
-         *  [x] Si plus d'article, set styles
-         * [x] Ajout dans le panier :
-         *  [x] Vérifier si qté & lentilles non vide
-         *  [x] Si produit existe déjà avec même lentille
-         * [x] Set quantité => set panier
-         *  [x] réaliser les sous totaux dynamique
-         *  [x] realiser le total dynamique
-         * [x] realiser la boucle pour les cartes dans la page order afficher et dupliquer
-         * [x] Si panier vide
-         *  [x] disable la partie form  ou le boutton a voir suivant style de page
-         *  [x] Masquer article par défaut
-         * [ ] Vérifier les qté avant envoi
-         * [v] Adapter les id de la page produit avec home
-         * [x] Ajouter une span de notification d'ajout de l'article ds le panier
-         * [ ] Ajouter un modal de suppression du panier
-         * [ ] Lien en cliquant sur le nom du produit sur le panier
-         */
+ * TODO List
+ * [x] Ajouter dans le panier depuis la page produit
+ * [x] Bouton supprimer : Supprime un élément du panier
+ *  [x] Si plus d'article, set styles
+ * [x] Ajout dans le panier :
+ *  [x] Vérifier si qté & lentilles non vide
+ *  [x] Si produit existe déjà avec même lentille
+ * [x] Set quantité => set panier
+ *  [x] réaliser les sous totaux dynamique
+ *  [x] realiser le total dynamique
+ * [x] realiser la boucle pour les cartes dans la page order afficher et dupliquer
+ * [x] Si panier vide
+ *  [x] disable la partie form  ou le boutton a voir suivant style de page
+ *  [x] Masquer article par défaut
+ * [ ] Vérifier les qté avant envoi
+ * [v] Adapter les id de la page produit avec home
+ * [x] Ajouter une span de notification d'ajout de l'article ds le panier
+ * [ ] Ajouter un modal de suppression du panier
+ * [ ] Lien en cliquant sur le nom du produit sur le panier
+ */
 
 /**
  *
@@ -34,6 +34,7 @@ class Panier {
         this.total = 0;
         this.options = options;
         this.quantityMax = 5; // TODO mettre une quantité max de 5 article present dans le panier
+        this.timeout = null;
 
         //this.createListener();
     }
@@ -251,8 +252,7 @@ class Panier {
     };
 
     setPanier = (e) => {
-
-        console.log("Panier.setPanier()");
+        console.log('Panier.setPanier()');
         // Stop l'event du lien
         e.preventDefault();
 
@@ -308,14 +308,6 @@ class Panier {
         }
         // Si l'article est bien ajouté on notifie de l'ajout pendant 1.5 sec
         msgSelect.classList.remove('text-danger');
-        msgSelect.classList.add('text-success');
-        msgSelect.textContent = 'Votre article a bien été ajouté !';
-
-        // On remet un content vide mais la span garde la meme taille pour pas modifier les tailles des cards
-        setTimeout(() => {
-            msgSelect.textContent = '';
-            msgSelect.classList.remove('text-success');
-        }, 1500);
 
         // Remet à jour le contenu du panier avant d'ajouter les nouveaux éléments
         this.tabProduits = this.loadPanier();
@@ -325,7 +317,22 @@ class Panier {
         let pos = this.getPosition(idArt.value, lenses.value);
         // Si l'article est déjà dans le panier
         if (pos >= 0) {
-            this.tabProduits[pos]['quantity'] += parseInt(quantity.value);
+            if (this.tabProduits[pos]['quantity'] == 5) {
+                msgSelect.classList.add('text-danger');
+                msgSelect.textContent = 'Rupture de stock !';
+            } else {
+                this.tabProduits[pos]['quantity'] += parseInt(quantity.value);
+
+                if (this.tabProduits[pos]['quantity'] > 5 /**produit.stock */) {
+                    msgSelect.classList.add('text-info');
+                    msgSelect.textContent =
+                        "Quantitée max de 5 articles atteinte.";
+                    this.tabProduits[pos]['quantity'] = 5;
+                } else {
+                    msgSelect.classList.add('text-success');
+                    msgSelect.textContent = 'La quantité d\'articles a été mise à jour.';
+                }
+            }
         } else {
             // Création d'un objet pour stocker les éléments du panier
             // prettier-ignore
@@ -339,9 +346,32 @@ class Panier {
             };
             // Ajoute le produit au panier tableau
             this.tabProduits.push(donneesPanier);
+
+            //message d ajout
+            msgSelect.classList.add('text-success');
+            msgSelect.textContent = 'Votre article a bien été ajouté !';
         }
+        // On remet un content vide mais la span garde la meme taille pour pas modifier les tailles des cards
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
+            msgSelect.textContent = '';
+            msgSelect.classList.remove('text-success', 'text-info', 'text-danger');
+        }, 3000);
+
         // Met à jour le panier
         this.setCookie();
         console.log('Produit ajouté dans le panier.');
     };
+
+    /**
+     * Récupère l'ensemble des id des produits contenu dans le panier
+     * @return {string[]} Tableau d'id
+     */
+    getListProductsId = () => {
+        let tab = [];
+        for (let produit of this.tabProduits) {
+            tab.push(produit.id)
+        }
+        return tab;
+    }
 }

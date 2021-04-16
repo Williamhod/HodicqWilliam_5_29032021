@@ -9,8 +9,9 @@ window.onload = () => {
         let id = 'cards_' + i;
         let img = document.querySelector(`#${id} img`);
         // TODO Remettre après
-        img.src = camera.imageUrl;
-        //img.src = 'images/vcam_' + (i + 1) + '.jpg';
+        //img.src = camera.imageUrl; // Récupération des données en mettant la fonction + le nom attribué dans l'api
+        // Version Json
+        img.src = camera.imageUrl.replace('http://localhost:3000/', '');
         img.alt = camera.name;
 
         document.querySelector(`#${id}_id`).value = camera._id;

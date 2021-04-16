@@ -34,7 +34,7 @@ window.onload = () => {
                 </select>\
             </li>\
         </ul>\
-        <span id="' + id + '_select-msg" class="d-flex msg-select"></span>\
+        <span id="' + id + '_select-msg" class="d-flex msg-select mb-3"></span>\
         <div class="row">\
             <div class="col-auto text-left unstretched-link ">\
                 <input type="submit" class="unstretched-link btn btn-success" value="Ajouter au panier" />\
@@ -49,7 +49,7 @@ window.onload = () => {
         // Création de l'article
         let div = document.createElement('div');
         div.id = id;
-        div.classList.add('card', 'mb-4', 'mx-2', 'border-0', 'shadow');
+        div.classList.add('card','w-md-100', 'mb-4', 'mx-2', 'border-0', 'shadow');
         div.innerHTML = template;
         document.querySelector('#list_cards').appendChild(div);
 
