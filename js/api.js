@@ -62,6 +62,7 @@ class Api {
                 lentilles: '#{{id}} #{{id}}_lenses',
                 prix: '#{{id}} #{{id}}_price',
                 nom: '#{{id}} h5',
+                linknom: '#{{id}} h5 > a',
                 image: '#{{id}} img',
                 quantity: '#{{id}} #{{id}}_quantity',
                 sousTotal: '#{{id}} #{{id}}_subtotal',

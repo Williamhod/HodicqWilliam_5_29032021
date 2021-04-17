@@ -73,27 +73,36 @@
                 </div>
             </div>
         </header>
-        <section class="container mt-3 mb-3 bg-white opacity-change">
-            <div class="row justify-content-center pt-5 pb-5">
-                <div>
-                    <h1>Confirmation de votre commande!</h1>
-                </div>
+        <section class="container mt-3 mb-3 bg-white opacity-change justify-content-center">
+            <div class="row justify-content-center pt-5 pb-4">
+                <h1 class="text-center">Confirmation de votre commande!</h1>
             </div>
-            <div>
-                <p>Votre commande a pour identitfiant : <span id="order id"></span> <br>
-                    conserver le bien.
+            <div class="row justify-content-center pt-2 pb-2">
+                <img src="./images/confirmationmerci.png" alt="image de remerciement" />
+            </div>
+            <div class="row justify-content-center pt-2 pb-2 justify-content-center pl-2 pr-2">
+                <p class="text-center">
+                    Votre commande a pour identitfiant :
+                    <span class="font-weight-bold" id="order-id"></span>
                 </p>
             </div>
-            <div class="row justify-content-center pt-2 pb-2">
-                <p>Nous vous remercions pour votre confiance.</p>
+            <div class="row justify-content-center pt-2 pb-2 pl-2 pr-2">
+                <p class="text-center">Vous retrouverez l'ensemble de votre commande par e-mail.</p>
             </div>
-            <div class="row justify-content-center pt-2 pb-2">
-                <p>Votre commande sera expediée dans les plus bref délais !</p>
+            <div class="row justify-content-center pt-2 pb-2 pl-2 pr-2">
+                <p class="text-center">Nous vous remercions pour votre confiance.</p>
             </div>
-            <div class="row justify-content-center pt-2 pb-5">
-                <p>
-                    Pour toute demande complémentaire, veuillez nous contacter depuis le lien "contactez-nous" en bas de
-                    votre page.
+            <div class="row justify-content-center pt-2 pb-2 pl-2 pr-2">
+                <p class="text-center">Votre commande sera expediée dans les plus bref délais !</p>
+            </div>
+            <div class="row justify-content-center pt-2 pb-5 pl-2 pr-2">
+                <p class="text-center">
+                    Pour toute demande complémentaire, veuillez nous contacter depuis le lien<span
+                        class="font-weight-bolder"
+                    >
+                        "contactez-nous"</span
+                    >
+                    en bas de votre page.
                 </p>
             </div>
         </section>
@@ -199,6 +208,6 @@
         <script src="./node_modules/jquery/dist/jquery.min.js"></script>
         <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="./js/prototypes.js"></script>
-        
+        <script src="./js/order-confirmation.app.js"></script>
     </body>
 </html>

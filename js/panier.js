@@ -115,7 +115,8 @@ class Panier {
             this.getPanierElement('idProduit', id).value = this.tabProduits[i].id;
             this.getPanierElement('lentilles', id).textContent = this.tabProduits[i].lenses;
             this.getPanierElement('prix', id).textContent = this.tabProduits[i].price;
-            this.getPanierElement('nom', id).textContent = this.tabProduits[i].name;
+            this.getPanierElement('linknom', id).textContent = this.tabProduits[i].name;
+            this.getPanierElement('linknom', id).href ="produit.html?id="+this.tabProduits[i].id;
             this.getPanierElement('image', id).src = this.tabProduits[i].img;
 
             let selectQuantity = this.getPanierElement('quantity', id);
