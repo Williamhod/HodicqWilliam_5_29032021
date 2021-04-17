@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <!-- meta -->
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--style-->
+        <link rel="shortcut icon" href="/images/favicon.ico" />
+        <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+
+        <title>Orinoco</title>
+    </head>
+    <body>
+        <header class="bg-secondary sticky-top">
+            <div class="container">
+                <div class="row">
+                    <nav class="col navbar navbar-expand-lg navbar-dark">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="images/Orinoco2.logo.png" width="auto" height="auto" alt="Logo" />
+                        </a>
+                        <form method="get" action="panier.html">
+                            <a href="order.html">
+                                <button type="button" class="navbar-toggler" style="color: white; border-color: white">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-basket2"
+                                        viewBox="0 0 16 16"
+                                        data-darkreader-inline-fill=""
+                                    >
+                                        <path
+                                            d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"
+                                        ></path>
+                                        <path
+                                            d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"
+                                        ></path>
+                                    </svg>
+                                    Panier
+                                </button>
+                            </a>
+                        </form>
+                        <div id="navbarContent" class="collapse navbar-collapse">
+                            <ul class="navbar-nav mr-auto"></ul>
+                            <form class="d-flex">
+                                <a href="order.html">
+                                    <button type="button" class="btn btn-success">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="currentColor"
+                                            class="bi bi-basket2"
+                                            viewBox="0 0 16 16"
+                                            data-darkreader-inline-fill=""
+                                        >
+                                            <path
+                                                d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"
+                                            ></path>
+                                            <path
+                                                d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"
+                                            ></path>
+                                        </svg>
+                                        Panier
+                                    </button>
+                                </a>
+                            </form>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <section class="container p-0">
+            <input type="hidden" id="page" value="home" />
+            <div class="alert alert-light alert-dismissible  p-0 fade show mt-4" role="alert">
+                <h1 class="alert-heading text-center">Bienvenue chez Orinoco</h1>
+                <p class="text-center">Nous sommes ravis de votre visite sur notre boutique en ligne !</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </section>
+        <section class="container">
+            <div id="list_cards" class="row justify-content-center mt-4"></div>
+        </section>
+
+        <footer class="container bg-secondary mt-1">
+            <div class="row pt-4 pb-3">
+                <div class="col text-light">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#" data-toggle="modal" data-target="#bannerformmodal" class="text-light"
+                                >Contactez-nous</a
+                            >
+                        </li>
+                        <li class="list-inline-item">&middot;</li>
+                        <li class="list-inline-item"><a href="#" class="text-light">Conditions d'utilisation</a></li>
+                    </ul>
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">&Oslash;rinoco &copy; 2021 Williamh&oslash;d</li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <div
+            class="modal fade bannerformmodal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="bannerformmodal"
+            aria-hidden="true"
+            id="bannerformmodal"
+        >
+            <div class="modal-dialog modal-md modal-dialog-centered mx-auto">
+                <div class="modal-content">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Contactez-nous</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Nom de famille"
+                                        name="last_name"
+                                        aria-label="Nom de famille"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Prénom"
+                                        name="first_name"
+                                        aria-label="Prénom"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Adresse e-mail"
+                                        name="email"
+                                        aria-label="Adresse e-mail"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Numéro de téléphone"
+                                        name="phone_mobile"
+                                        aria-label="numéro de téléphone"
+                                    />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <textarea
+                                        type="text"
+                                        class="form-control"
+                                        name="description"
+                                        placeholder="Ici votre message avec nos remerciements pour cette prise de contact."
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info">Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script-->
+        <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="./js/prototypes.js"></script>
+        <script src="./js/panier.js"></script>
+        <script src="./js/api.js"></script>
+        <script src="./js/index.app.js"></script>
+    </body>
+</html>

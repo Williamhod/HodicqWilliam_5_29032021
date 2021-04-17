@@ -1,0 +1,116 @@
+body {
+    background-image: linear-gradient(to bottom, rgba(78, 78, 76, 0.5), rgba(158, 158, 204, 0.5)),
+        url('../images/bgbody.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;
+    min-height: 100vh;
+}
+
+header {
+    opacity: 0.9;
+}
+.card {
+    width: 20rem;
+}
+.card-img-index {
+    height: 200px;
+    object-fit: cover;
+}
+.unstretched-link {
+    position: absolute;
+    position: relative;
+    z-index: 2;
+}
+.opacity-change {
+    opacity: 0.8;
+}
+footer {
+    opacity: 0.8;
+}
+.alert {
+    opacity: 0.85;
+}
+
+/*product page */
+
+.card-img-product {
+    max-height: 500px;
+    object-fit: cover;
+}
+
+/* order page */
+
+.card-img-older {
+    /*background-image: url(./images/vcam_1.jpg);*/
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.align-manuel-item {
+    display: flex;
+    align-items: center;
+}
+.custom-input-order-name {
+    width: 50% !important;
+}
+@media only screen and (max-width: 766px) {
+    .input-group > input {
+        margin: 0 0 !important;
+    }
+
+    .modal-xl {
+        margin: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 766px) {
+    .input-group > input {
+        margin: 0 35px !important;
+    }
+}
+
+/* Grossit la taille de la bordure pour les menus selects avec une erreur */
+select.border-danger {
+    border-width: 2px;
+}
+
+#list_cards article:nth-child(odd) > form {
+    background-color: rgb(199, 193, 193);
+}
+
+#list_cards article:nth-child(even) > form {
+    background-color: rgb(203, 206, 206);
+}
+
+.btn-order {
+    background-color: rgb(255, 255, 255) !important;
+}
+
+/*taille mini du span des champs d erreur ou validation basket*/
+
+.msg-select{
+    min-height: 1.5rem;
+}
+
+
+/*modal contact sizing*/
+
+.modal-dialog{
+    width: 100%!important;
+    max-width: 100%!important;
+}
+
+/*card index*/
+
+@media only screen and (max-width: 766px) {
+    
+    .w-md-100{
+        width: 100%!important;
+    }
+}
