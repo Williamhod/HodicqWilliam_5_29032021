@@ -1,26 +1,4 @@
 /**
- * TODO List
- * [x] Ajouter dans le panier depuis la page produit
- * [x] Bouton supprimer : Supprime un élément du panier
- *  [x] Si plus d'article, set styles
- * [x] Ajout dans le panier :
- *  [x] Vérifier si qté & lentilles non vide
- *  [x] Si produit existe déjà avec même lentille
- * [x] Set quantité => set panier
- *  [x] réaliser les sous totaux dynamique
- *  [x] realiser le total dynamique
- * [x] realiser la boucle pour les cartes dans la page order afficher et dupliquer
- * [x] Si panier vide
- *  [x] disable la partie form  ou le boutton a voir suivant style de page
- *  [x] Masquer article par défaut
- * [ ] Vérifier les qté avant envoi
- * [v] Adapter les id de la page produit avec home
- * [x] Ajouter une span de notification d'ajout de l'article ds le panier
- * [ ] Ajouter un modal de suppression du panier
- * [ ] Lien en cliquant sur le nom du produit sur le panier
- */
-
-/**
  *
  */
 class Panier {
@@ -35,19 +13,9 @@ class Panier {
         this.options = options;
         this.quantityMax = 5; // TODO mettre une quantité max de 5 article present dans le panier
         this.timeout = null;
-
-        //this.createListener();
     }
 
-    /*createListener = () => {
-        console.log('create event');
-            window.addEventListener('storage', () => {
-                console.log('panier modifié !!!!!!!!!!!');
-                this.loadPanier();
-                console.log(this.tabProduits);
-                this.setDisplayPanier();
-            });
-    }*/
+   
 
     setCookie = () => {
         localStorage.set(this.nameCookie, this.tabProduits);
@@ -266,16 +234,8 @@ class Panier {
         let id = 'cards_' + articleID;
 
         // Vérifie si une lentille et une quantité ont été sélectionnées
-        /*let idArt = form.querySelector(`#${id} #${id}_id`);
-        let lenses = form.querySelector(`#${id} #${id}_lenses`);
-        let quantity = form.querySelector(`#${id} #${id}_quantity`);
-        let msgSelect = form.querySelector(`#${id} #${id}_select-msg`);
-        let name = form.querySelector(`#${id} h5`);
-        let price = form.querySelector(`#${id} #${id}_price`);
-        let img = form.querySelector(`#${id} img`);*/
-
         let idArt = form.querySelector(`#${id} #${id}_id`);
-        //let lenses = this.getPanierElement('lentilles', id);
+
         let lenses = form.querySelector(`#${id} #${id}_lenses`);
         let quantity = form.querySelector(`#${id} #${id}_quantity`);
         let msgSelect = form.querySelector(`#${id} #${id}_select-msg`);

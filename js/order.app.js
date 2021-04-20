@@ -3,7 +3,6 @@ window.onload = () => {
     let monApi = new Api('panier');
     let monPanier = monApi.getPanier();
 
-    // TODO Ajouter un loader
     monPanier.setDisplayPanier();
     monPanier.display();
 
@@ -33,16 +32,9 @@ window.onload = () => {
     /***************************************************
      ** Modal- Confirmation de commande                *
      **************************************************/
-    /**
-     * TODO List
-     * [ ] validation des champs
-     * [ ] redirection apres validation des champs depuis le btn du modal
-     * [ ] voir pour la génération de l'id de commande
-     * [ ] X
-     * [ ] X
-     */
 
     // Declaration des id provenant des inputs de order
+    
     let modalName = document.querySelector(`#order_last_name`);
     let modalFirstName = document.querySelector(`#order_first_name`);
     let modalPhone = document.querySelector(`#order_phone_number`);
@@ -50,11 +42,12 @@ window.onload = () => {
     let modalCity = document.querySelector(`#order_city`);
     let modalEmail = document.querySelector(`#order_email`);
     let modalForm = document.querySelector(`#order_form`);
-    console.log(modalForm);
 
     // Declaration des formats
     let phoneFormat = /^\d{10}$/;
     let emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let nameAllFormat = /^[A-Za-z- '\p{L}]{2,}[^\s\p{S}\p{P}\$*-+/]$/;
+    let adressFormat = /^([A-Za-z0-9- .,#'\p{L}]{7,}[^\s\p{S}\p{P}\$-+/])$/;
 
     // Set up des messages des champs non complèter
     let modalErrorMessages = {
@@ -62,55 +55,36 @@ window.onload = () => {
         order_first_name: 'Le prénom est tout aussi essentiel que le nom',
         order_adress: 'Si vous nous dites pas ou envoyer la commande, on ne peut le savoir hein !',
         order_city: 'Ohh vraiment tu as oublié ta ville ? =)',
+        order_email: 'Merci de renseigner votre adresse e-mail',
+        order_phone_number: 'Vous pouvez renseigner votre numéro de téléphone, mais ce n\'est pas obligatoire',
     };
 
-    // permet de mettre en relation le format de l inpu email et modifier la class si match
-    const validateEmail = () => {
-        modalEmail.classList.remove('is-valid', 'is-invalid');
-        if (modalEmail.value.match(emailFormat)) {
-            modalEmail.classList.add('is-valid');
-            modalEmail.setCustomValidity('');
-        } else {
-            modalEmail.classList.add('is-invalid');
-            modalEmail.setCustomValidity('Merci de renseigner votre adresse e-mail');
-        }
-    };
-
-    //same pour tel
-    const validatePhone = () => {
-        modalPhone.classList.remove('is-valid', 'is-invalid');
-        if (modalPhone.value.match(phoneFormat)) {
-            modalPhone.classList.add('is-valid');
-        } else {
-            modalPhone.classList.add('is-invalid');
-        }
-    };
-
-    // valeur minimal de 3 caractère pour les champs adresse, city, prenom et nom. avec le custom des messages des champs non remplis
-    const modalChecker = (e) => {
+    //Pour toute les autre modal 
+    const validateModal = (e, format) => {
         let elem = e.target;
-        console.log(e);
         elem.classList.remove('is-valid', 'is-invalid');
-        if (elem.value.length > 3) {
+        if (elem.value.match(format)) {
             elem.classList.add('is-valid');
             elem.setCustomValidity('');
         } else {
             elem.classList.add('is-invalid');
             elem.setCustomValidity(modalErrorMessages[e.target.getAttribute('id')]);
         }
-        //Réalisation de l'objet de contact pour le post order/api
+        
     };
 
-    modalEmail.addEventListener('blur', validateEmail);
-    modalName.addEventListener('blur', modalChecker);
-    modalFirstName.addEventListener('blur', modalChecker);
-    modalAddress.addEventListener('blur', modalChecker);
-    modalCity.addEventListener('blur', modalChecker);
+    modalEmail.addEventListener('blur', (e) => validateModal(e, emailFormat));
+    modalName.addEventListener('blur', (e) => validateModal(e, nameAllFormat));
+    modalFirstName.addEventListener('blur', (e) => validateModal(e, nameAllFormat));
+    modalAddress.addEventListener('blur', (e) => validateModal(e, adressFormat));
+    modalCity.addEventListener('blur', (e) => validateModal(e, nameAllFormat));
+    modalPhone.addEventListener('blur', (e) => validateModal(e, phoneFormat))
 
     // au clic du submit , nous réalisons l objet contact et products (comprenant uniquement les id produits)
     modalForm.addEventListener('submit', (e) => {
         // on retire la redirection du submit
         e.preventDefault();
+        //Réalisation de l'objet de contact pour le post order/api
         let contact = {
             firstName: modalFirstName.value,
             lastName: modalName.value,

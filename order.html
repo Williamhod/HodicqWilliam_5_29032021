@@ -6,9 +6,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--style-->
-        <link rel="stylesheet" href="./css/style.css" />
         <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css" />
+        <link rel="stylesheet" href="./css/style.css" />
         <link rel="shortcut icon" href="/images/favicon.ico" />
 
         <title>Orinoco - votre commande</title>
@@ -121,29 +121,29 @@
                         <div
                             class="col-0 col-md-4 col-lg-2 align-manuel-item pl-0 pr-0 border-right pl-md-2 ml-1 ml-md-0"
                         >
-                            <span class="justify-self-center">Prix : <span id="cards_0_price"></span></span>
+                            <span class="justify-self-center">Prix : <span id="cards_0_price" class="font-weight-bold"></span></span>
                         </div>
                         <div
                             class="col-0 col-lg-2 align-manuel-item justify-content-lg-center ml-1 ml-md-0 pl-0 pr-0 pl-md-2 mt-md-2 mt-lg-0 border-right"
                         >
-                            <select class="form-select inputGroupSelect02" id="cards_0_quantity"></select>
+                            <select class="form-select inputGroupSelect02 border-dark" id="cards_0_quantity"></select>
                             <button
-                                class="btn border-secondary p-1 mx-2 ml-3 btn-order"
+                                class="btn  p-1 mx-2 ml-3 border-dark btn-danger"
                                 id="cards_0_remove"
                                 data-toggle="modal"
                                 data-target="#modalConfirmRemove"
                             >
-                                Supprimer
+                                <span class="bi bi-trash"></span> Supprimer
                             </button>
                         </div>
                         <div class="col-0 col-lg-2 align-manuel-item pl-0 pl-md-2 ml-1 ml-md-0">
-                            <span>Sous-total : <span id="cards_0_subtotal"></span></span>
+                            <span>Sous-total : <span id="cards_0_subtotal" class="font-weight-bold"></span></span>
                         </div>
                     </form>
                 </article>
             </div>
             <div class="row justify-content-around mt-2" id="order-total">
-                <h3>Total : <span id="cards_total"></span></h3>
+                <h3><u>Total : <span id="cards_total"></span></u></h3>
             </div>
         </section>
         <section class="container p-0" id="order-modal-container">
@@ -168,6 +168,7 @@
                                         name="lastName"
                                         aria-label="Nom de famille"
                                         id="order_last_name"
+                                        pattern="([A-Za-z- '\p{L}]{2,}[^\s\p{S}\p{P}])"
                                         required
                                     />
                                 </div>
@@ -180,6 +181,7 @@
                                         name="firstName"
                                         aria-label="Prénom"
                                         id="order_first_name"
+                                        pattern="([A-Za-z- '\p{L}]{2,}[^\s\p{S}\p{P}])"
                                         required
                                     />
                                 </div>
@@ -206,6 +208,7 @@
                                         name="address"
                                         aria-label="Adresse postal"
                                         id="order_adress"
+                                        pattern="([A-Za-z0-9- .,#'\p{L}]{7,}[^\s\p{S}\p{P}])"
                                         required
                                     />
                                 </div>
@@ -218,6 +221,7 @@
                                         name="city"
                                         aria-label="city"
                                         id="order_city"
+                                        pattern="([A-Za-z- '\p{L}]{2,}[^\s\p{S}\p{P}])"
                                         required
                                     />
                                 </div>
