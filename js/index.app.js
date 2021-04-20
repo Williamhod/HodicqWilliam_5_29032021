@@ -5,7 +5,6 @@ window.onload = () => {
     let monPanier = monApi.getPanier();
 
     const createCard = async (i, camera) => {
-        console.log('Function', 'createCard()');
         // Id de l'article (dans le code)
         let id = 'cards_' + i;
 
@@ -18,23 +17,29 @@ window.onload = () => {
         <h5 class="card-title"></h5>\
         <p class="card-text unstretched-link"></p>\
         <ul class="list-group list-group-flush">\
-            <li class="list-group-item unstretched-link"><span>Prix : </span><span id="' + id + '_price" ></span></li>\
+            <li class="list-group-item unstretched-link"><span>Prix : </span><span id="' + id + '_price" class="font-weight-bold"></span></li>\
             <li class="list-group-item unstretched-link">\
-                <select class="form-select inputGroupSelect01 unstretched-link" id="' + id + '_lenses">\
-                <option value="" selected>Lentilles</option>\
+            <div class="form-floating w-80  w-md-75 w-lg-85 mt-2 unstretched-link">\
+                <select class="form-select2 inputGroupSelect01" id="' + id + '_lenses">\
+                <option value="" selected>-</option>\
                 </select>\
+                <label>Lentilles</label>\
+                </div>\
             <li class="list-group-item unstretched-link">\
-                <select class="form-select inputGroupSelect02 unstretched-link" id="' + id + '_quantity">\
-                    <option value="0" selected>Quantité</option>\
+            <div class="form-floating w-80  w-md-75 w-lg-85 mt-2">\
+                <select class="form-select2 inputGroupSelect02" id="' + id + '_quantity">\
+                    <option value="0" selected>-</option>\
                     <option value="1">1</option>\
                     <option value="2">2</option>\
                     <option value="3">3</option>\
                     <option value="4">4</option>\
                     <option value="5">5</option>\
                 </select>\
+                <label>Quantité</label>\
+            </div>\
             </li>\
         </ul>\
-        <span id="' + id + '_select-msg" class="d-flex msg-select mb-3"></span>\
+        <span id="' + id + '_select-msg" class="d-flex msg-select mb-3 unstretched-link"></span>\
         <div class="row">\
             <div class="col-auto text-left unstretched-link ">\
                 <input type="submit" class="unstretched-link btn btn-success" value="Ajouter au panier" />\
@@ -49,7 +54,7 @@ window.onload = () => {
         // Création de l'article
         let div = document.createElement('div');
         div.id = id;
-        div.classList.add('card','w-md-100', 'mb-4', 'mx-2', 'border-0', 'shadow');
+        div.classList.add('card', 'w-md-100', 'mb-4', 'mx-2', 'border-0', 'shadow');
         div.innerHTML = template;
         document.querySelector('#list_cards').appendChild(div);
 
@@ -57,7 +62,7 @@ window.onload = () => {
 
         //let img = document.querySelector('#' + id + ' img');
         let img = document.querySelector(`#${id} img`);
-        // TODO Remettre après
+
         //img.src = camera.imageUrl; // Récupération des données en mettant la fonction + le nom attribué dans l'api
         // Version Json
         img.src = camera.imageUrl.replace('http://localhost:3000/', '');
@@ -91,21 +96,12 @@ window.onload = () => {
     let i = 0;
     // la fonction loadPage a ces données mise dans la fonction camera.
     const loadPage = (cameras) => {
-        console.log('Function', 'loadPage()');
-        console.log(cameras);
-        // Double la quantité de cameras pour les tests
-        //cameras.push(...cameras);
-
         // Si camaras est un tableau, cela signifie que l'id demandé n'a pas été trouvé
         if (Array.isArray(cameras) && cameras.length > 0) {
-            /*if( cameras.length == 0 ) {
-            console.error('Erreur');
-        } else {*/
             for (let camera of cameras) {
                 createCard(i, camera);
                 i++;
             }
-            // }
         } else {
             console.error('Erreur');
         }
@@ -113,8 +109,6 @@ window.onload = () => {
 
     let datas = {};
     const loadDatas = async () => {
-        console.log('Function', 'loadDatas()');
-
         // recuperation des données de l api pour les mettre dans la fonction loadPage
         datas = await monApi.getProducts();
         loadPage(datas);

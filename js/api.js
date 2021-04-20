@@ -40,6 +40,7 @@ class Api {
         });
     };
 
+    
     getOptionsPanier = () => {
         return {
             // les élèments a voir quand le panier contient un article

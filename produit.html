@@ -6,8 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--style-->
-        <link rel="stylesheet" href="./css/style.css" />
         <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./css/style.css" />
         <link rel="shortcut icon" href="/images/favicon.ico" />
 
         <title>Orinoco - votre produit</title>
@@ -87,15 +87,17 @@
 
         <section class="container p-0 d-none" id="message-error">
             <input type="hidden" id="page" value="product" />
-            <div class="alert alert-light alert-dismissible fade show   p-0 mt-4" role="alert">
+            <div class="alert alert-light alert-dismissible fade show p-0 mt-4" role="alert">
                 <h1 class="alert-heading text-center">Erreur</h1>
                 <p class="text-center text-danger">Produit non trouvé, veuillez retourner sur la page d'accueil.</p>
-                <p class="text-center btn-dark "><a class="text-white" href="index.html">Retour sur la page d'accueil</a></p>
+                <p class="text-center btn-dark">
+                    <a class="text-white" href="index.html">Retour sur la page d'accueil</a>
+                </p>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        </section> 
+        </section>
         <section class="container mt-3" id="cards_0">
             <form action="#" method="GET" id="cards_0_form">
                 <input type="hidden" value="" name="id" id="cards_0_id" />
@@ -106,23 +108,31 @@
                             <h5 class="card-title" id="product-name"></h5>
                             <p class="card-text" id="product-description"></p>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><span>Prix : </span><span id="cards_0_price"></span></li>
                                 <li class="list-group-item">
-                                    <select
-                                        class="form-select inputGroupSelect01"
-                                        name="product-lens"
-                                        id="cards_0_lenses"
-                                    >
-                                        <option value="" selected>Lentilles</option>
-                                    </select>
-                                    <select class="form-select inputGroupSelect02" id="cards_0_quantity">
-                                        <option value="0" selected>Quantité</option>
+                                    <span>Prix : </span><span id="cards_0_price" class="font-weight-bold"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-floating  w-80  w-md-40 w-lg-30">
+                                        <select
+                                            class="form-select2 inputGroupSelect01"
+                                            name="product-lens"
+                                            id="cards_0_lenses"
+                                        >
+                                            <option value="" selected>-</option>
+                                        </select>
+                                        <label>Lentille</label>
+                                    </div>
+                                    <div class="form-floating w-80  w-md-40 w-lg-30 mt-3">
+                                    <select class="form-select2 inputGroupSelect02" id="cards_0_quantity">
+                                        <option value="0" selected>-</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
+                                    <label>Quantité</label>
+                                </div>
                                     <span id="cards_0_select-msg" class="msg-select d-flex mt-3"></span>
                                 </li>
                             </ul>

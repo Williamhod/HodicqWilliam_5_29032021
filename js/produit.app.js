@@ -4,12 +4,10 @@ window.onload = () => {
     let monPanier = monApi.getPanier();
 
     const editCard = async (i, camera) => {
-        console.log('Function', 'editCard()');
         // Id de l'article (dans le code)
         let id = 'cards_' + i;
         let img = document.querySelector(`#${id} img`);
-        // TODO Remettre après
-        //img.src = camera.imageUrl; // Récupération des données en mettant la fonction + le nom attribué dans l'api
+
         // Version Json
         img.src = camera.imageUrl.replace('http://localhost:3000/', '');
         img.alt = camera.name;
@@ -38,21 +36,16 @@ window.onload = () => {
     let i = 0;
     // la fonction loadPage a ces données mise dans la fonction camera.
     const loadPage = (cameras) => {
-        console.log('Function', 'loadPage()');
-        console.log(cameras);
-        // Double la quantité de cameras pour les tests
-        //cameras.push(...cameras);
 
-        // Si camaras est un tableau, cela signifie que l'id demandé n'a pas été trouvé
+        // Si cameras est un tableau, cela signifie que l'id demandé n'a pas été trouvé
         if (Array.isArray(cameras)) {
-            // TODO Afficher message d'erreur HTML
+            
             // Produit non trouvé
             document.querySelector('#message-error').show('');
             document.querySelector('#cards_0').hide();
             document.querySelector('#message-valid').hide();
             setTimeout(() => (window.location = 'index.html'), 5000);
         } else {
-            console.log('card avec info id item');
             // Une seule camera
             editCard(i, cameras);
         }
@@ -60,7 +53,6 @@ window.onload = () => {
 
     let datas = {};
     const loadDatas = async () => {
-        console.log('Function', 'loadDatas()');
         // Récupère les params get pour l'id de l'objet afin d'avoir une fiche produit
         //let $_GET = window.location.href.getCookies();
         let $_GET = [];
