@@ -8,8 +8,8 @@ window.onload = () => {
 
     // Variable pour contenir le bouton supprimer
     let bt_supprimer_target = null;
-    // Se déclenche lorsque le modal s'ouvre
-    $('#modalConfirmRemove').on('show.bs.modal', function (e) {
+
+    const customModal = (e) => {
         // Stocke le bouton Supprimer sur lequel l'utilisateur a cliqué
         bt_supprimer_target = e.relatedTarget;
         // Récupère l'id de l'élément
@@ -20,21 +20,25 @@ window.onload = () => {
         // Modifie le contenue du modal
         article.textContent = monPanier.getPanierElement('nom', id).textContent;
         lentilles.textContent = monPanier.getPanierElement('lentilles', id).textContent;
-    });
+    };
+    // Se déclenche lorsque le modal s'ouvre
+    $('#modalConfirmRemove').on('show.bs.modal', customModal);
 
-    $('#modalConfirmRemoveValid').on('click', function () {
+    const confirmationRemoveModal = () => {
         // Retire l'article du panier
         monPanier.removeProduit(bt_supprimer_target);
         // Réinitialise la variable contenant le bouton cliqué
         bt_supprimer_target = null;
-    });
+    };
+
+    $('#modalConfirmRemoveValid').on('click', confirmationRemoveModal);
 
     /***************************************************
      ** Modal- Confirmation de commande                *
      **************************************************/
 
     // Declaration des id provenant des inputs de order
-    
+
     let modalName = document.querySelector(`#order_last_name`);
     let modalFirstName = document.querySelector(`#order_first_name`);
     let modalPhone = document.querySelector(`#order_phone_number`);
@@ -56,10 +60,10 @@ window.onload = () => {
         order_adress: 'Si vous nous dites pas ou envoyer la commande, on ne peut le savoir hein !',
         order_city: 'Ohh vraiment tu as oublié ta ville ? =)',
         order_email: 'Merci de renseigner votre adresse e-mail',
-        order_phone_number: 'Vous pouvez renseigner votre numéro de téléphone, mais ce n\'est pas obligatoire',
+        order_phone_number: "Vous pouvez renseigner votre numéro de téléphone, mais ce n'est pas obligatoire",
     };
 
-    //Pour toute les autre modal 
+    // au blur du champs selectionné , vérifier sur le format du modal correspond avec les données utilisateurs
     const validateModal = (e, format) => {
         let elem = e.target;
         elem.classList.remove('is-valid', 'is-invalid');
@@ -70,7 +74,6 @@ window.onload = () => {
             elem.classList.add('is-invalid');
             elem.setCustomValidity(modalErrorMessages[e.target.getAttribute('id')]);
         }
-        
     };
 
     modalEmail.addEventListener('blur', (e) => validateModal(e, emailFormat));
@@ -78,10 +81,9 @@ window.onload = () => {
     modalFirstName.addEventListener('blur', (e) => validateModal(e, nameAllFormat));
     modalAddress.addEventListener('blur', (e) => validateModal(e, adressFormat));
     modalCity.addEventListener('blur', (e) => validateModal(e, nameAllFormat));
-    modalPhone.addEventListener('blur', (e) => validateModal(e, phoneFormat))
+    modalPhone.addEventListener('blur', (e) => validateModal(e, phoneFormat));
 
-    // au clic du submit , nous réalisons l objet contact et products (comprenant uniquement les id produits)
-    modalForm.addEventListener('submit', (e) => {
+    const setupOrder = (e) => {
         // on retire la redirection du submit
         e.preventDefault();
         //Réalisation de l'objet de contact pour le post order/api
@@ -98,19 +100,20 @@ window.onload = () => {
             products,
         };
 
-        let returned = () => {
+        const sendOrder = () => {
             //return new Promise((resolve) => {
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 var xhr = new XMLHttpRequest();
 
                 xhr.onload = function () {
                     // print JSON response
                     if (this.readyState === XMLHttpRequest.DONE && this.status === 201) {
-                        localStorage.set('order', this.responseText);
-                        window.location = './order-confirmation.html';
-                        //resolve(JSON.parse(this.responseText));
+                        // localStorage.set('order', this.responseText);
+                        // window.location = './order-confirmation.html';
+                        resolve(JSON.parse(this.responseText));
                     } else {
                         // ERROR
+                        reject(this);
                     }
                 };
                 xhr.open('POST', 'http://localhost:3000/api/cameras/order', true);
@@ -120,8 +123,20 @@ window.onload = () => {
                 xhr.send(JSON.stringify(order));
             });
         };
-        returned();
-    });
+        sendOrder()
+            .then((response) => {
+                localStorage.set('order', response);
+                window.location = './order-confirmation.html';
+            })
+            .catch((error) => {
+                // Affichage message d'erreur
+                console.error('Erreur', error.status, ':', error.statusText);
+                console.error('URL :', error.responseURL);
+            });
+    };
+
+    // au clic du submit , nous réalisons l objet contact et products (comprenant uniquement les id produits)
+    modalForm.addEventListener('submit', setupOrder);
 };
 
 /***************************************************

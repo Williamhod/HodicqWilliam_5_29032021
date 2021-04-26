@@ -18,7 +18,7 @@ window.onload = () => {
         <p class="card-text unstretched-link"></p>\
         <ul class="list-group list-group-flush">\
             <li class="list-group-item unstretched-link"><span>Prix : </span><span id="' + id + '_price" class="font-weight-bold"></span></li>\
-            <li class="list-group-item unstretched-link">\
+            <li class="list-group-item  unstretched-link">\
             <div class="form-floating w-80  w-md-75 w-lg-85 mt-2 unstretched-link">\
                 <select class="form-select2 inputGroupSelect01" id="' + id + '_lenses">\
                 <option value="" selected>-</option>\
@@ -96,7 +96,7 @@ window.onload = () => {
     let i = 0;
     // la fonction loadPage a ces données mise dans la fonction camera.
     const loadPage = (cameras) => {
-        // Si camaras est un tableau, cela signifie que l'id demandé n'a pas été trouvé
+        // Si cameras est un tableau, cela signifie que l'id demandé n'a pas été trouvé
         if (Array.isArray(cameras) && cameras.length > 0) {
             for (let camera of cameras) {
                 createCard(i, camera);
@@ -114,5 +114,13 @@ window.onload = () => {
         loadPage(datas);
     };
 
-    loadDatas();
+    loadDatas()
+        .then(() => {
+            console.log('Connected');
+        })
+        .catch((error) => {
+            //permet de voir la réponse de la promesse de l api (getproduct) en cas de non connexion
+            console.error('Erreur', error.status, ':', error.statusText);
+            console.error('URL :', error.responseURL);
+        });
 };

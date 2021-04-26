@@ -4,7 +4,7 @@ class Api {
         this.url = url;
         this.cookieName = cookieName;
         // Créer le panier pour l'application
-        this.panier = new Panier(cookieName, this.getOptionsPanier());
+        this.panier = new Panier(cookieName, this.loadOptions());
     }
 
     getPanier = () => {
@@ -19,19 +19,25 @@ class Api {
         return this.url;
     }
 
+    /**
+     * Créer une promesse qui exécute une requete de connexion à
+     * l'url choisit dans l'api et retourne une réponse.
+     * Si la réponse a un statut 200, cela retourne un tableau
+     * des produits, sinon cela ne retourne rien.
+     * @returns {Promise} Promesse contenant le tableau des articles
+     */
     getProducts = () => {
-        return new Promise((response) => {
+        return new Promise((resolve,reject) => {
             let request = new XMLHttpRequest();
             request.onreadystatechange = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     //if (this.statusText == 'OK') {
                     if (this.status == 200) {
-                        // Si tout se passe bien
-                        response(JSON.parse(this.responseText));
-                        console.log('Connected');
+                        // renvoi le tableau de produit
+                        resolve(JSON.parse(this.responseText));
                     } else {
-                        // Si tout va mal
-                        console.error('Erreur : ' + this.statusText);
+                        // renvoie la réponse de connexion si cela ne se connecte pas.
+                        reject(this);
                     }
                 }
             };
@@ -41,7 +47,7 @@ class Api {
     };
 
     
-    getOptionsPanier = () => {
+    loadOptions = () => {
         return {
             // les élèments a voir quand le panier contient un article
             elemsBasketFull: [
