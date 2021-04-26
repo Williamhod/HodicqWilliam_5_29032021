@@ -54,7 +54,6 @@ window.onload = () => {
     let datas = {};
     const loadDatas = async () => {
         // Récupère les params get pour l'id de l'objet afin d'avoir une fiche produit
-        //let $_GET = window.location.href.getCookies();
         let $_GET = [];
         window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (a, name, value) => {
             //recupere les paramètres de l url
@@ -80,5 +79,13 @@ window.onload = () => {
         loadPage(datas);
     };
 
-    loadDatas();
+    loadDatas()
+    .then(() => {
+        console.log('Connected');
+    })
+    .catch((error) => {
+        //permet de voir la réponse de la promesse de l api (getproduct) en cas de non connexion
+        console.error('Erreur', error.status, ':', error.statusText);
+        console.error('URL :', error.responseURL);
+    });
 };;

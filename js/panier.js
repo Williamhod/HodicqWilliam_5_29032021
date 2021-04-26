@@ -15,14 +15,12 @@ class Panier {
         this.timeout = null;
     }
 
-   
-
-    setCookie = () => {
+    setStorage = () => {
         localStorage.set(this.nameCookie, this.tabProduits);
     };
 
     /**
-     * Charge le panier à partir d'un cookie
+     * Charge le panier à partir d'un storage (cookie local)
      * @returns {Array}
      */
     loadPanier = () => {
@@ -32,6 +30,8 @@ class Panier {
 
     /**
      * Retourne la position d'un id associé à une lentille dans le panier
+     * ce qui va permettre d'accèder à l'élèment modifié depuis l'interface
+     * utilisateur jusqu'au panier
      * @param {string} id Id du produit
      * @param {string} lentille Lentille choisie
      * @returns {number} Position du produit dans le panier
@@ -84,7 +84,7 @@ class Panier {
             this.getPanierElement('lentilles', id).textContent = this.tabProduits[i].lenses;
             this.getPanierElement('prix', id).textContent = this.tabProduits[i].price;
             this.getPanierElement('linknom', id).textContent = this.tabProduits[i].name;
-            this.getPanierElement('linknom', id).href ="produit.html?id="+this.tabProduits[i].id;
+            this.getPanierElement('linknom', id).href = 'produit.html?id=' + this.tabProduits[i].id;
             this.getPanierElement('image', id).src = this.tabProduits[i].img;
 
             let selectQuantity = this.getPanierElement('quantity', id);
@@ -174,7 +174,7 @@ class Panier {
             this.getPanierElement('lentilles', id).textContent,
         );
 
-        // Supprime l'élément à la position pos (le 1 signifie 1 élément supprimé)
+        // Modifie la quantité de l'élément à la position pos
         this.tabProduits[pos].quantity = parseInt(this.getPanierElement('quantity', id).value);
 
         // Retire l'ancien sous-total du total
@@ -188,7 +188,7 @@ class Panier {
         this.getPanierElement('total', id).textContent = this.total.numberFormat();
 
         // Met à jour le panier
-        this.setCookie();
+        this.setStorage();
     };
 
     removeProduit = (target) => {
@@ -213,7 +213,7 @@ class Panier {
         this.getPanierElement('total', id).textContent = this.total.numberFormat();
 
         // Met à jour le panier
-        this.setCookie();
+        this.setStorage();
         // Retire l'élémen du DOM
         this.getPanierElement('article', articleID, '#').remove();
         // Met à jour la page s'il n'y a plus d'éléments dans le panier
@@ -286,12 +286,11 @@ class Panier {
 
                 if (this.tabProduits[pos]['quantity'] > 5 /**produit.stock */) {
                     msgSelect.classList.add('text-info');
-                    msgSelect.textContent =
-                        "Quantitée max de 5 articles atteinte.";
+                    msgSelect.textContent = 'Quantitée max de 5 articles atteinte.';
                     this.tabProduits[pos]['quantity'] = 5;
                 } else {
                     msgSelect.classList.add('text-success');
-                    msgSelect.textContent = 'La quantité d\'articles a été mise à jour.';
+                    msgSelect.textContent = "La quantité d'articles a été mise à jour.";
                 }
             }
         } else {
@@ -313,14 +312,14 @@ class Panier {
             msgSelect.textContent = 'Votre article a bien été ajouté !';
         }
         // On remet un content vide mais la span garde la meme taille pour pas modifier les tailles des cards
-        clearTimeout(this.timeout)
+        clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             msgSelect.textContent = '';
             msgSelect.classList.remove('text-success', 'text-info', 'text-danger');
         }, 3000);
 
         // Met à jour le panier
-        this.setCookie();
+        this.setStorage();
         console.log('Produit ajouté dans le panier.');
     };
 
@@ -331,8 +330,8 @@ class Panier {
     getListProductsId = () => {
         let tab = [];
         for (let produit of this.tabProduits) {
-            tab.push(produit.id)
+            tab.push(produit.id);
         }
         return tab;
-    }
+    };
 }
