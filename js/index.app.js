@@ -1,7 +1,8 @@
 window.onload = () => {
-    // Création de l'objet panier avec le cookie 'panier'
     //let monApi = new Api('panier', 'cameras_sauvegarde.json');
+    //parametre de la class api 
     let monApi = new Api('panier', 'http://localhost:3000/api/cameras/');
+    //création de l'objet panier lier a la class api 
     let monPanier = monApi.getPanier();
 
     const createCard = async (i, camera) => {

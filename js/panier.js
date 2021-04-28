@@ -11,7 +11,7 @@ class Panier {
         this.tabProduits = this.loadPanier();
         this.total = 0;
         this.options = options;
-        this.quantityMax = 5; // TODO mettre une quantité max de 5 article present dans le panier
+        this.quantityMax = 5; 
         this.timeout = null;
     }
 
@@ -194,7 +194,6 @@ class Panier {
     removeProduit = (target) => {
         console.log('remove');
 
-        //let bt = this.lastEvent.action == 'remove' ? this.lastEvent.target : null;
         let articleID = target.numberID();
 
         // Récupère le numéro de l'article via l'id du button
@@ -226,14 +225,13 @@ class Panier {
         e.preventDefault();
 
         let form = e.target;
-
-        //let bt = this.lastEvent.action == 'remove' ? this.lastEvent.target : null;
+        
         let articleID = form.numberID();
 
         // Récupère le numéro de l'article via l'id du button
         let id = 'cards_' + articleID;
 
-        // Vérifie si une lentille et une quantité ont été sélectionnées
+        // on recupèrer les champs valeurs
         let idArt = form.querySelector(`#${id} #${id}_id`);
 
         let lenses = form.querySelector(`#${id} #${id}_lenses`);
