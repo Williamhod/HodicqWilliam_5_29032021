@@ -1,5 +1,4 @@
 window.onload = () => {
-    // Création de l'objet panier avec le cookie 'panier'
     let monApi = new Api('panier');
     let monPanier = monApi.getPanier();
 

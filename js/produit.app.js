@@ -1,6 +1,5 @@
 window.onload = () => {
-    // Création de l'objet panier avec le cookie 'panier'
-    let monApi = new Api('panier', 'cameras_sauvegarde.json');
+    let monApi = new Api('panier', 'http://localhost:3000/api/cameras/');
     let monPanier = monApi.getPanier();
 
     const editCard = async (i, camera) => {
@@ -60,21 +59,12 @@ window.onload = () => {
             $_GET[name] = value;
         });
 
-        // NOTE Version avec le fichier json
-        datas = await monApi.getProducts();
-        if (typeof $_GET['id'] === 'string') {
-            datas.forEach((val) => {
-                if (val['_id'] == $_GET['id']) {
-                    datas = val;
-                    return;
-                }
-            });
-        }
+        
         // NOTE Version avec le lien localhost
-        /*if (typeof $_GET['id'] !== 'undefined') {
+        if (typeof $_GET['id'] !== 'undefined') {
             monApi.setUrl('http://localhost:3000/api/cameras/' + $_GET['id']);
         }
-        datas = await monApi.getProducts();*/
+        datas = await monApi.getProducts();
 
         loadPage(datas);
     };
@@ -89,3 +79,13 @@ window.onload = () => {
         console.error('URL :', error.responseURL);
     });
 };;
+// NOTE Version avec le fichier json
+       /* datas = await monApi.getProducts();
+        if (typeof $_GET['id'] === 'string') {
+            datas.forEach((val) => {
+                if (val['_id'] == $_GET['id']) {
+                    datas = val;
+                    return;
+                }
+            });
+        }*/
